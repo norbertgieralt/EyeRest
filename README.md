@@ -2,7 +2,7 @@
 ## Technical assumptions
 - WPF + MVVM
 - settings in an XML file
-- pictures import in bmp., .png. and .jpg
+- pictures import in .bmp, .png. and .jpg
 ## User stories
 1. As an unsigned user with no internet connection I want to be notified (by graphic and sound notification) after 1 hour of work that it's time to have a 5 minuts break in order to not forget to make a 5 minutes break for my eyes after each hour.
 2. As an unsigned user with no internet connection I want to be able to stop time counting, restart work or break period, or go to the next period in order to be able to use the app flexiby when I need to step away from the computer.
