@@ -11,8 +11,11 @@
 5. As an unsigned user with no internet connection I want to be able to import my picture (for example of plants) to be displayed when it's time to break in order to enable my eyes to rest.
 ## Mockups
 
-![image](https://github.com/NorbertG23/EyeRest/assets/132151413/64ce4a3d-a9e4-439a-a1ad-ad37a22c7875)
-![image](https://github.com/NorbertG23/EyeRest/assets/132151413/81d6d3ec-dbdc-4a2c-893e-595b253f1579)
-![image](https://github.com/NorbertG23/EyeRest/assets/132151413/8cc5993d-e71f-4b69-8468-d4965a1d744c)
-![image](https://github.com/NorbertG23/EyeRest/assets/132151413/3e1ed7cf-815b-4d73-a99d-205621e2f3f2)
-![image](https://github.com/NorbertG23/EyeRest/assets/132151413/6f4e6880-020a-422e-aa98-276f707db84f)
+![image](https://github.com/norbertgieralt/EyeRest/assets/132151413/0b159792-9a84-4cdb-aab4-5be082befae8)
+![image](https://github.com/norbertgieralt/EyeRest/assets/132151413/ea5b555a-f145-4f65-b758-7e9b7cf05a60)
+![image](https://github.com/norbertgieralt/EyeRest/assets/132151413/4dafc8d1-dfde-4a52-826f-f9a05df3c6e4)
+![image](https://github.com/norbertgieralt/EyeRest/assets/132151413/367119f6-71a7-403d-9ebc-3e89d4952265)
+![image](https://github.com/norbertgieralt/EyeRest/assets/132151413/c7b38914-a426-4a25-8103-230c7a6cc767)
+
+
+
