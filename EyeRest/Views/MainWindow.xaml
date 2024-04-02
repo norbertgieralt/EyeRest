@@ -6,13 +6,26 @@
         xmlns:local="clr-namespace:EyeRest"
         xmlns:vm="clr-namespace:EyeRest.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="200" >
+        Title="{Binding TimeStringToDisplay2}" Height="250" Width="200" 
+        WindowStyle="ToolWindow"
+        MaxHeight="250" MaxWidth="200"
+        >
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
     <StackPanel>
-        <Label Content="{Binding TitleStringToDisplay}" HorizontalAlignment="Center" />
-        <Label Content="{Binding TimeStringToDisplay}" HorizontalAlignment="Center" />
+        <Label Content="{Binding TitleStringToDisplay}" HorizontalAlignment="Center" FontSize="20" FontFamily="bold">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="10"/>
+            </Label.Effect>
+        </Label>        
+        <Label Content="{Binding TimeStringToDisplay}" HorizontalAlignment="Center" FontSize="30" FontFamily="bold">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="10"/>
+            </Label.Effect>
+        </Label>
+        <Button Height="30" Width="150" Content="{Binding TitleStringToDisplay2}"  Command="{Binding StartPauseOrResumeCommand}" />
         <Button Height="30" Width="150" Content="Start work (55 min)"  Command="{Binding StartWorkCommand}" />
+        <Button Height="30" Width="150" Content="Start break (5 min)"  Command="{Binding StartBreakCommand}" />
     </StackPanel>
 </Window>

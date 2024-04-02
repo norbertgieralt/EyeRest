@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
@@ -15,8 +9,10 @@ namespace EyeRest.ViewModels
     internal class MainWindowViewModel : INotifyPropertyChanged
     {
         #region Fields
-        private int seconds;
-        public Timer timer;
+        internal int seconds;
+        internal Timer timer;
+        internal string timerStatus;
+        
         #endregion
         #region Properties       
 
@@ -47,6 +43,20 @@ namespace EyeRest.ViewModels
                 OnPropertChanged("TitleStringToDisplay");
             }
         }
+        private string titleStringToDisplay2;
+
+        public string TitleStringToDisplay2
+        {
+            get
+            {
+                return titleStringToDisplay2;
+            }
+            set
+            {
+                titleStringToDisplay2 = value;
+                OnPropertChanged("TitleStringToDisplay2");
+            }
+        }
 
         private string timeStringToDisplay;
 
@@ -60,6 +70,21 @@ namespace EyeRest.ViewModels
             {
                 timeStringToDisplay = value;
                 OnPropertChanged("TimeStringToDisplay");
+                OnPropertChanged("TimeStringToDisplay2");
+            }
+        }
+        private string timeStringToDisplay2;
+
+        public string TimeStringToDisplay2
+        {
+            get
+            {
+                return "EyeRest "+TimeStringToDisplay;
+            }
+            set
+            {
+                timeStringToDisplay2 = value;
+                OnPropertChanged("TimeStringToDisplay2");
             }
         }
         #endregion
@@ -68,7 +93,8 @@ namespace EyeRest.ViewModels
         {
             seconds = 0;
             TimeStringToDisplay = "00:00";
-
+            TitleStringToDisplay = "Hello!";
+            titleStringToDisplay2 = "Hello";            
         }
         #endregion
         #region Timer
@@ -79,22 +105,42 @@ namespace EyeRest.ViewModels
             timer.Elapsed += OnTimedEvent;
             timer.AutoReset = true;
             timer.Enabled = true;
+
         }
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {      
             seconds += 1;
 
-            if (seconds >55*60 )
+            int length;
+            if (TitleStringToDisplay=="Work")
+            {
+                length = 55 * 60;
+                //length = 6;
+            }
+            else
+            {
+                length = 5*60;
+                //length = 3;
+            }
+
+            if (seconds >length )
             {
                 timer.Stop();
                 timer.Dispose();
                 seconds = 0;
+                if (TitleStringToDisplay == "Work")
+                {
+                    StartBreakCommand.Execute(seconds);
+                }
+                else
+                {
+                    StartWorkCommand.Execute(seconds);
+                }
             }
 
             int tempMinutes=seconds/60;
             int tempSeconds=seconds-tempMinutes*60;
-            string minutesString;
-            string secondsString;
+            string minutesString, secondsString;
 
             if (tempMinutes==0)
             {
@@ -134,6 +180,24 @@ namespace EyeRest.ViewModels
                 return startWorkCommand;
             }
         }
+        private ICommand startBreakCommand;
+        public ICommand StartBreakCommand
+        {
+            get
+            {
+                if (startBreakCommand == null) startBreakCommand = new StartBreakCommandClass(this);
+                return startBreakCommand;
+            }
+        }
+        private ICommand startPauseOrResumeCommand;
+        public ICommand StartPauseOrResumeCommand
+        {
+            get
+            {
+                if (startPauseOrResumeCommand == null) startPauseOrResumeCommand = new StartPauseOrResumeCommandClass(this);
+                return startPauseOrResumeCommand;
+            }
+        }
         #endregion
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -166,10 +230,94 @@ namespace EyeRest.ViewModels
 
         public void Execute(object? parameter)
         {
-            //if (mainWindowViewModel.timer!=null)
-            //    return;
+            if (mainWindowViewModel.timer != null)
+            {
+                mainWindowViewModel.timer.Stop();
+                mainWindowViewModel.timer.Dispose();
+                mainWindowViewModel.TimeStringToDisplay = "00 : 00";
+                mainWindowViewModel.seconds = 0;
+
+            }
             mainWindowViewModel.TitleStringToDisplay = "Work";
             mainWindowViewModel.SetTimer();
+            mainWindowViewModel.timerStatus = "On";
+            mainWindowViewModel.TitleStringToDisplay2 = "Pause";
+            Console.Beep(500, 200);
+            Console.Beep(1000, 200);
+           // Console.Beep(5000, 100);
+            MessageBox.Show("It's time to work.");            
+        }
+    }
+    internal class StartBreakCommandClass : ICommand
+    {
+        private readonly MainWindowViewModel mainWindowViewModel;
+        public StartBreakCommandClass(MainWindowViewModel mainWindowViewModel)
+        {
+            this.mainWindowViewModel = mainWindowViewModel;
+        }
+        public event EventHandler? CanExecuteChanged;
+
+        public bool CanExecute(object? parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object? parameter)
+        {
+            if (mainWindowViewModel.timer != null)
+            {
+                mainWindowViewModel.timer.Stop();
+                mainWindowViewModel.timer.Dispose();
+                mainWindowViewModel.TimeStringToDisplay = "00 : 00";
+                mainWindowViewModel.seconds = 0;
+            }
+
+            mainWindowViewModel.TitleStringToDisplay = "Break";
+            mainWindowViewModel.SetTimer();
+            mainWindowViewModel.timerStatus = "On";
+            mainWindowViewModel.TitleStringToDisplay2 = "Pause";
+
+            Console.Beep(1000, 200);
+            Console.Beep(500, 200);
+            MessageBox.Show("It's time to have a break.");
+        }
+    }
+    internal class StartPauseOrResumeCommandClass : ICommand
+    {
+        private readonly MainWindowViewModel mainWindowViewModel;
+        public StartPauseOrResumeCommandClass(MainWindowViewModel mainWindowViewModel)
+        {
+            this.mainWindowViewModel = mainWindowViewModel;
+        }
+        public event EventHandler? CanExecuteChanged;
+
+        public bool CanExecute(object? parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object? parameter)
+        {
+            if (mainWindowViewModel.timer == null)
+                return;            
+            if (mainWindowViewModel.timerStatus=="On")
+            {
+                mainWindowViewModel.timer.Stop();
+                mainWindowViewModel.timerStatus = "Off";
+                mainWindowViewModel.TitleStringToDisplay += " (Pause)";
+                mainWindowViewModel.TitleStringToDisplay2 = "Resume";
+
+            }
+            else
+            {
+                mainWindowViewModel.timer.Start();
+                mainWindowViewModel.timerStatus = "On";
+                mainWindowViewModel.TitleStringToDisplay2 = "Pause";
+                if (mainWindowViewModel.TitleStringToDisplay.StartsWith('W'))
+                    mainWindowViewModel.TitleStringToDisplay = "Work";
+                else
+                    mainWindowViewModel.TitleStringToDisplay = "Break";
+            }
         }
     }
     #endregion
