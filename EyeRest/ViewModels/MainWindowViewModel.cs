@@ -98,8 +98,9 @@ namespace EyeRest.ViewModels
         }
         #endregion
         #region Timer
-        internal void SetTimer()
+        internal void SetTimer(int secs)
         {
+            seconds = secs;
             initTime=DateTime.Now;
             timer = new Timer(1000);
             timer.Elapsed += OnTimedEvent;
@@ -109,21 +110,9 @@ namespace EyeRest.ViewModels
         }
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {      
-            seconds += 1;
+            seconds -= 1;
 
-            int length;
-            if (TitleStringToDisplay=="Work")
-            {
-                length = 55 * 60;
-                //length = 6;
-            }
-            else
-            {
-                length = 5*60;
-                //length = 3;
-            }
-
-            if (seconds >length )
+            if (seconds <=0 )
             {
                 timer.Stop();
                 timer.Dispose();
@@ -235,16 +224,15 @@ namespace EyeRest.ViewModels
                 mainWindowViewModel.timer.Stop();
                 mainWindowViewModel.timer.Dispose();
                 mainWindowViewModel.TimeStringToDisplay = "00 : 00";
-                mainWindowViewModel.seconds = 0;
+                //mainWindowViewModel.seconds = 0;
 
             }
             mainWindowViewModel.TitleStringToDisplay = "Work";
-            mainWindowViewModel.SetTimer();
+            mainWindowViewModel.SetTimer(6);
             mainWindowViewModel.timerStatus = "On";
             mainWindowViewModel.TitleStringToDisplay2 = "Pause";
             Console.Beep(500, 200);
             Console.Beep(1000, 200);
-           // Console.Beep(5000, 100);
             MessageBox.Show("It's time to work.");            
         }
     }
@@ -269,11 +257,12 @@ namespace EyeRest.ViewModels
                 mainWindowViewModel.timer.Stop();
                 mainWindowViewModel.timer.Dispose();
                 mainWindowViewModel.TimeStringToDisplay = "00 : 00";
-                mainWindowViewModel.seconds = 0;
+                //mainWindowViewModel.seconds = 0;
             }
 
             mainWindowViewModel.TitleStringToDisplay = "Break";
-            mainWindowViewModel.SetTimer();
+            //mainWindowViewModel.SetTimer(5*60);
+            mainWindowViewModel.SetTimer(3);
             mainWindowViewModel.timerStatus = "On";
             mainWindowViewModel.TitleStringToDisplay2 = "Pause";
 
