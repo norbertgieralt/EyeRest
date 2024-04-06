@@ -6,26 +6,69 @@
         xmlns:local="clr-namespace:EyeRest"
         xmlns:vm="clr-namespace:EyeRest.ViewModels"
         mc:Ignorable="d"
-        Title="{Binding TimeStringToDisplay2}" Height="250" Width="200" 
-        WindowStyle="ToolWindow"
-        MaxHeight="250" MaxWidth="200"
+        Title="{Binding TimeStringToDisplay2}" Height="400" Width="220" 
+        WindowStyle="ThreeDBorderWindow"
+        MaxHeight="400" MaxWidth="220" Background="MintCream" 
         >
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
-    <StackPanel>
-        <Label Content="{Binding TitleStringToDisplay}" HorizontalAlignment="Center" FontSize="20" FontFamily="bold">
-            <Label.Effect>
-                <DropShadowEffect BlurRadius="10"/>
-            </Label.Effect>
-        </Label>        
-        <Label Content="{Binding TimeStringToDisplay}" HorizontalAlignment="Center" FontSize="30" FontFamily="bold">
-            <Label.Effect>
-                <DropShadowEffect BlurRadius="10"/>
-            </Label.Effect>
-        </Label>
-        <Button Height="30" Width="150" Content="{Binding LabelInFirstButton}"  Command="{Binding StartPauseOrResumeCommand}"/>
-        <Button Height="30" Width="150" Content="Start work (55 min)"  Command="{Binding StartWorkCommand}" />
-        <Button Height="30" Width="150" Content="Start break (5 min)"  Command="{Binding StartBreakCommand}" />
-    </StackPanel>
+    <Border BorderThickness="3" BorderBrush="Black" Margin="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <Label Content="{Binding TitleStringToDisplay}" HorizontalAlignment="Center" FontSize="20" FontFamily="bold" Margin="0,5,0,0" Foreground="Black" FontWeight="Bold">
+                </Label>
+                <Label Content="{Binding TimeStringToDisplay}" HorizontalAlignment="Center" FontSize="35" FontFamily="bold" Margin="0,0,0,10" Foreground="black" FontWeight="ExtraBold" />
+                <Button Height="40" Width="120"  Content="{Binding LabelInFirstButton}"  Command="{Binding StartPauseOrResumeCommand}" Margin="5" Background="MintCream" FontWeight="Bold" BorderThickness="5,2,5,2" BorderBrush="black">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10" />
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Height="40" Width="120" Content="Start work"  Command="{Binding StartWorkCommand}" Margin="5" Background="MintCream" FontWeight="Bold" BorderThickness="5,2,5,2" BorderBrush="Black">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10" />
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Height="40" Width="120" Content="Start break"  Command="{Binding StartBreakCommand}" Margin="5" Background="MintCream" FontWeight="Bold" BorderThickness="5,2,5,2" BorderBrush="Black">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10" />
+                        </Style>
+                    </Button.Resources>
+                </Button>                 
+            </StackPanel>
+            <Grid Grid.Row="2" Margin="0,15,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Height="35" Width="60" Content="Settings" Margin="5" Background="MintCream" FontWeight="Bold" BorderThickness="5,2,5,2" BorderBrush="Black">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10" />
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Grid.Column="2" Height="35" Width="60" Content="Quit" Margin="5" Background="MintCream" FontWeight="Bold" BorderThickness="5,2,5,2" BorderBrush="Black">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10" />
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+            <Label Grid.Row="3" FontWeight="Bold" HorizontalAlignment="Center" FontSize="9">© 2024 Norbert Gierałt</Label>
+        </Grid>
+    </Border>
 </Window>
