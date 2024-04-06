@@ -1,34 +1,45 @@
-﻿using System;
+﻿using EyeRest.Models;
+using System;
 using System.ComponentModel;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
+using static EyeRest.Models.AppModel;
 
 namespace EyeRest.ViewModels
 {
     internal class MainWindowViewModel : INotifyPropertyChanged
     {
         #region Fields
-        internal int seconds;
-        internal Timer timer;
-        internal string timerStatus;
-        
-        #endregion
-        #region Properties       
 
-        private DateTime initTime;
-        public DateTime InitTime
+        private System.Timers.Timer rerfeshingTimer;
+
+        private AppModel model;              
+
+        #endregion
+        #region Properties  
+        public AppModel Model
         {
-            get
-            {
-                return initTime;
-            }
-            set
-            {
-                initTime = value;
-                OnPropertChanged("InitTime");
+            get { return model; }
+            set { model = value; }
+        }
+        public System.Timers.Timer Timer
+        {
+            get { return model.Timer; }
+            set { model.Timer = value; }
+        }
+
+        private int seconds;
+
+        public int Seconds
+        {
+            get { return model.SecondsOnClock; }
+            set 
+            { 
+                model.SecondsOnClock=value;
             }
         }
+
         private string titleStringToDisplay;
 
         public string TitleStringToDisplay
@@ -43,18 +54,18 @@ namespace EyeRest.ViewModels
                 OnPropertChanged("TitleStringToDisplay");
             }
         }
-        private string titleStringToDisplay2;
+        private string labelInFirstButton;
 
-        public string TitleStringToDisplay2
+        public string LabelInFirstButton
         {
             get
             {
-                return titleStringToDisplay2;
+                return labelInFirstButton;
             }
             set
             {
-                titleStringToDisplay2 = value;
-                OnPropertChanged("TitleStringToDisplay2");
+                labelInFirstButton = value;
+                OnPropertChanged("LabelInFirstButton");
             }
         }
 
@@ -64,13 +75,12 @@ namespace EyeRest.ViewModels
         {
             get
             { 
-                return timeStringToDisplay; 
+                return model.TimeOnClockToString(); 
             }
             set 
             {
                 timeStringToDisplay = value;
                 OnPropertChanged("TimeStringToDisplay");
-                OnPropertChanged("TimeStringToDisplay2");
             }
         }
         private string timeStringToDisplay2;
@@ -84,81 +94,69 @@ namespace EyeRest.ViewModels
             set
             {
                 timeStringToDisplay2 = value;
-                OnPropertChanged("TimeStringToDisplay2");
             }
         }
+
+        private TimerStatus status;
+
+        public TimerStatus Status
+        {
+            get { return model.Status; }
+            set 
+            { 
+                model.Status = value;
+                OnPropertChanged("Status");
+            }
+        }
+
         #endregion
         #region Constructor
         public MainWindowViewModel()
         {
-            seconds = 0;
+            model = new AppModel();
             TimeStringToDisplay = "00:00";
             TitleStringToDisplay = "Hello!";
-            titleStringToDisplay2 = "Hello";            
+            LabelInFirstButton = "Hello";
         }
         #endregion
-        #region Timer
-        internal void SetTimer(int secs)
+        #region Methods
+        internal void StartRefreshingTimer()
         {
-            seconds = secs;
-            initTime=DateTime.Now;
-            timer = new Timer(1000);
-            timer.Elapsed += OnTimedEvent;
-            timer.AutoReset = true;
-            timer.Enabled = true;
-
+            if (rerfeshingTimer!=null)
+            {
+                rerfeshingTimer.Stop();
+                rerfeshingTimer.Dispose();
+            }
+            
+            rerfeshingTimer = new System.Timers.Timer(1000);
+            rerfeshingTimer.Elapsed += OnTimedEvent;
+            rerfeshingTimer.AutoReset = true;
+            rerfeshingTimer.Enabled = true;            
         }
         private void OnTimedEvent(object source, ElapsedEventArgs e)
-        {      
-            seconds -= 1;
+        {
+            OnPropertChanged("Seconds");
+            OnPropertChanged("TimeStringToDisplay");
+            OnPropertChanged("TimeStringToDisplay2");
 
-            if (seconds <=0 )
+            if (Seconds ==0)
             {
-                timer.Stop();
-                timer.Dispose();
-                seconds = 0;
-                if (TitleStringToDisplay == "Work")
+                TimeStringToDisplay = "00 : 00";
+                OnPropertChanged("TimeStringToDisplay");
+                OnPropertChanged("TimeStringToDisplay2");
+                if (TitleStringToDisplay=="Work")
                 {
-                    StartBreakCommand.Execute(seconds);
+                    StartBreakCommand.Execute(this);
+                    TitleStringToDisplay = "Break";
                 }
-                else
+                else if (TitleStringToDisplay == "Break")
                 {
-                    StartWorkCommand.Execute(seconds);
+                    startWorkCommand.Execute(this);
+                    TitleStringToDisplay = "Work";
                 }
             }
-
-            int tempMinutes=seconds/60;
-            int tempSeconds=seconds-tempMinutes*60;
-            string minutesString, secondsString;
-
-            if (tempMinutes==0)
-            {
-                minutesString = "00";
-            }
-            else if (tempMinutes<10)
-            {
-                minutesString= "0"+tempMinutes.ToString();
-            }
-            else
-            {
-                minutesString= tempMinutes.ToString();
-            }
-
-            if (tempSeconds == 0)
-            {
-                secondsString = "00";
-            }
-            else if (tempSeconds < 10)
-            {
-                secondsString = "0" + tempSeconds.ToString();
-            }
-            else
-            {
-                secondsString = tempSeconds.ToString();
-            }
-            TimeStringToDisplay = minutesString + " : " + secondsString;            
         }
-        #endregion
+        #endregion       
         #region Commands
         private ICommand startWorkCommand;
         public ICommand StartWorkCommand
@@ -219,18 +217,18 @@ namespace EyeRest.ViewModels
 
         public void Execute(object? parameter)
         {
-            if (mainWindowViewModel.timer != null)
+            if (mainWindowViewModel.Timer != null)
             {
-                mainWindowViewModel.timer.Stop();
-                mainWindowViewModel.timer.Dispose();
+                mainWindowViewModel.Timer.Stop();
+                mainWindowViewModel.Timer.Dispose();
                 mainWindowViewModel.TimeStringToDisplay = "00 : 00";
-                //mainWindowViewModel.seconds = 0;
-
             }
             mainWindowViewModel.TitleStringToDisplay = "Work";
-            mainWindowViewModel.SetTimer(6);
-            mainWindowViewModel.timerStatus = "On";
-            mainWindowViewModel.TitleStringToDisplay2 = "Pause";
+            mainWindowViewModel.Model.StartTimer(55*60);
+            mainWindowViewModel.StartRefreshingTimer();            
+            mainWindowViewModel.Status = TimerStatus.On;
+            mainWindowViewModel.LabelInFirstButton = "Pause";
+
             Console.Beep(500, 200);
             Console.Beep(1000, 200);
             MessageBox.Show("It's time to work.");            
@@ -252,19 +250,18 @@ namespace EyeRest.ViewModels
 
         public void Execute(object? parameter)
         {
-            if (mainWindowViewModel.timer != null)
+            if (mainWindowViewModel.Timer != null)
             {
-                mainWindowViewModel.timer.Stop();
-                mainWindowViewModel.timer.Dispose();
+                mainWindowViewModel.Timer.Stop();
+                mainWindowViewModel.Timer.Dispose();
                 mainWindowViewModel.TimeStringToDisplay = "00 : 00";
-                //mainWindowViewModel.seconds = 0;
             }
-
             mainWindowViewModel.TitleStringToDisplay = "Break";
-            //mainWindowViewModel.SetTimer(5*60);
-            mainWindowViewModel.SetTimer(3);
-            mainWindowViewModel.timerStatus = "On";
-            mainWindowViewModel.TitleStringToDisplay2 = "Pause";
+            mainWindowViewModel.Model.StartTimer(5*60);
+            mainWindowViewModel.StartRefreshingTimer();
+            mainWindowViewModel.Status = TimerStatus.Paused;
+
+            mainWindowViewModel.LabelInFirstButton = "Pause";
 
             Console.Beep(1000, 200);
             Console.Beep(500, 200);
@@ -287,21 +284,19 @@ namespace EyeRest.ViewModels
 
         public void Execute(object? parameter)
         {
-            if (mainWindowViewModel.timer == null)
-                return;            
-            if (mainWindowViewModel.timerStatus=="On")
+            if (mainWindowViewModel.Timer == null)
+                return;
+            if (mainWindowViewModel.Status == TimerStatus.On)
             {
-                mainWindowViewModel.timer.Stop();
-                mainWindowViewModel.timerStatus = "Off";
+                mainWindowViewModel.Model.PauseTimer();
                 mainWindowViewModel.TitleStringToDisplay += " (Pause)";
-                mainWindowViewModel.TitleStringToDisplay2 = "Resume";
+                mainWindowViewModel.LabelInFirstButton = "Resume";
 
             }
             else
             {
-                mainWindowViewModel.timer.Start();
-                mainWindowViewModel.timerStatus = "On";
-                mainWindowViewModel.TitleStringToDisplay2 = "Pause";
+                mainWindowViewModel.Model.ResumeTimer();
+                mainWindowViewModel.LabelInFirstButton = "Pause";
                 if (mainWindowViewModel.TitleStringToDisplay.StartsWith('W'))
                     mainWindowViewModel.TitleStringToDisplay = "Work";
                 else

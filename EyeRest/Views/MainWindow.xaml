@@ -24,7 +24,7 @@
                 <DropShadowEffect BlurRadius="10"/>
             </Label.Effect>
         </Label>
-        <Button Height="30" Width="150" Content="{Binding TitleStringToDisplay2}"  Command="{Binding StartPauseOrResumeCommand}" />
+        <Button Height="30" Width="150" Content="{Binding LabelInFirstButton}"  Command="{Binding StartPauseOrResumeCommand}"/>
         <Button Height="30" Width="150" Content="Start work (55 min)"  Command="{Binding StartWorkCommand}" />
         <Button Height="30" Width="150" Content="Start break (5 min)"  Command="{Binding StartBreakCommand}" />
     </StackPanel>
