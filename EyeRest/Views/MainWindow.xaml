@@ -22,9 +22,9 @@
             <StackPanel Grid.Row="0">
                 <Label Content="{Binding TitleStringToDisplay}" Style="{StaticResource LabelTitle}" />
                 <Label Content="{Binding TimeStringToDisplay}" Style="{StaticResource LabelTime}" />
-                <Button  Content="{Binding LabelInFirstButton}"  Command="{Binding StartPauseOrResumeCommand}" Style="{StaticResource Button1}"/>
-                <Button Content="Start work"  Command="{Binding StartWorkCommand}" Style="{StaticResource Button1}" />
-                <Button Content="Start break"  Command="{Binding StartBreakCommand}" Style="{StaticResource Button1}"/>
+                <Button Content="{Binding LabelInFirstButton}"  Command="{Binding StartPauseOrResumeCommand}" Style="{StaticResource ButtonPauseorResume}"/>
+                <Button Content="Start work"  Command="{Binding StartWorkCommand}" Style="{StaticResource ButtonLargeMainWindow}" />
+                <Button Content="Start break"  Command="{Binding StartBreakCommand}" Style="{StaticResource ButtonLargeMainWindow}" />
             </StackPanel>
             <Grid Grid.Row="2" Margin="0,15,0,0">
                 <Grid.ColumnDefinitions>
@@ -32,8 +32,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Settings" Style="{StaticResource Button2}"/>
-                <Button Grid.Column="2" Content="Quit" Style="{StaticResource Button2}"/>
+                <Button Grid.Column="0" Content="Settings" Style="{StaticResource ButtonSmallMainWindow}"/>
+                <Button Grid.Column="2" Content="Quit" Style="{StaticResource ButtonSmallMainWindow}"/>
             </Grid>
             <Label Grid.Row="3" Style="{StaticResource LabelCoprights}" >© 2024 Norbert Gierałt</Label>
         </Grid>

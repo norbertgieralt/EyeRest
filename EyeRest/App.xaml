@@ -34,13 +34,25 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Gainsboro" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
-        <Style x:Key="Button1" BasedOn="{StaticResource ButtonAbstract}" TargetType="Button">
+        <Style x:Key="ButtonLargeMainWindow" BasedOn="{StaticResource ButtonAbstract}" TargetType="Button">
             <Setter Property="Width" Value="120"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="Margin" Value="0,0,0,10"/>
         </Style>
-        <Style x:Key="Button2" BasedOn="{StaticResource ButtonAbstract}" TargetType="Button">
+        <Style x:Key="ButtonPauseorResume" BasedOn="{StaticResource ButtonLargeMainWindow}" TargetType="Button">
+            <Style.Triggers>                
+                <DataTrigger Binding="{Binding Path=TitleStringToDisplay}" Value="Hello!" >
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ButtonSmallMainWindow" BasedOn="{StaticResource ButtonAbstract}" TargetType="Button">
             <Setter Property="Width" Value="60"/>
             <Setter Property="Height" Value="35"/>
             <Setter Property="Margin" Value="5" />
