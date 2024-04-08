@@ -155,7 +155,7 @@ namespace EyeRest.ViewModels
                     TitleStringToDisplay = "Work";
                 }
             }
-        }
+        }       
         #endregion       
         #region Commands
         private ICommand startWorkCommand;
@@ -183,6 +183,15 @@ namespace EyeRest.ViewModels
             {
                 if (startPauseOrResumeCommand == null) startPauseOrResumeCommand = new StartPauseOrResumeCommandClass(this);
                 return startPauseOrResumeCommand;
+            }
+        }
+        private ICommand quitCommand;
+        public ICommand QuitCommand
+        {
+            get
+            {
+                if (quitCommand == null) quitCommand = new QuitCommandClass();
+                return quitCommand;
             }
         }
         #endregion
@@ -302,6 +311,21 @@ namespace EyeRest.ViewModels
                 else
                     mainWindowViewModel.TitleStringToDisplay = "Break";
             }
+        }
+    }
+    internal class QuitCommandClass : ICommand
+    {        
+        public event EventHandler? CanExecuteChanged;
+
+        public bool CanExecute(object? parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object? parameter)
+        {
+           if (MessageBox.Show("Are you sure to quit?","Quit",MessageBoxButton.YesNo,MessageBoxImage.Question)== MessageBoxResult.Yes)
+                App.Current.Shutdown();
         }
     }
     #endregion

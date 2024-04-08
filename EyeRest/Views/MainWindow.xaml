@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:EyeRest.ViewModels"
         mc:Ignorable="d"
         Title="{Binding TimeStringToDisplay2}"
-        Style="{StaticResource MainWindow}">
+        Style="{StaticResource MainWindow}">    
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
@@ -33,7 +33,7 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Content="Settings" Style="{StaticResource ButtonSmallMainWindow}"/>
-                <Button Grid.Column="2" Content="Quit" Style="{StaticResource ButtonSmallMainWindow}"/>
+                <Button Grid.Column="2" Content="Quit" Command="{Binding QuitCommand}" Style="{StaticResource ButtonSmallMainWindow}"/>
             </Grid>
             <Label Grid.Row="3" Style="{StaticResource LabelCoprights}" >© 2024 Norbert Gierałt</Label>
         </Grid>
