@@ -1,6 +1,8 @@
-﻿using EyeRest.Models;
+﻿using EyeRest.Helpers;
+using EyeRest.Models;
 using System;
 using System.ComponentModel;
+using System.Security.Cryptography.Xml;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
@@ -10,14 +12,12 @@ namespace EyeRest.ViewModels
 {
     internal class MainWindowViewModel : BaseViewModel
     {
-        #region Fields
+        #region Fields and properties
 
         private System.Timers.Timer rerfeshingTimer;
 
-        private AppModel model;              
+        private AppModel model;            
 
-        #endregion
-        #region Properties  
         public AppModel Model
         {
             get { return model; }
@@ -89,7 +89,7 @@ namespace EyeRest.ViewModels
         {
             get
             {
-                return "EyeRest "+TimeStringToDisplay;
+                return TimeStringToDisplay +titleStringToDisplay;
             }
             set
             {
@@ -120,7 +120,7 @@ namespace EyeRest.ViewModels
         }
         #endregion
         #region Methods
-        internal void StartRefreshingTimer()
+        private void startRefreshingTimer()
         {
             if (rerfeshingTimer!=null)
             {
@@ -129,11 +129,11 @@ namespace EyeRest.ViewModels
             }
             
             rerfeshingTimer = new System.Timers.Timer(1000);
-            rerfeshingTimer.Elapsed += OnTimedEvent;
+            rerfeshingTimer.Elapsed += onTimedEvent;
             rerfeshingTimer.AutoReset = true;
             rerfeshingTimer.Enabled = true;            
         }
-        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        private void onTimedEvent(object source, ElapsedEventArgs e)
         {
             OnPropertChanged("Seconds");
             OnPropertChanged("TimeStringToDisplay");
@@ -151,170 +151,105 @@ namespace EyeRest.ViewModels
                 }
                 else if (TitleStringToDisplay == "Break")
                 {
-                    startWorkCommand.Execute(this);
+                    StartWorkCommand.Execute(this);
                     TitleStringToDisplay = "Work";
                 }
             }
-        }       
-        #endregion       
-        #region Commands
-        private ICommand startWorkCommand;
-        public ICommand StartWorkCommand
+        }
+        private void startWork()
         {
-            get
+            if (Timer != null)
             {
-                if (startWorkCommand == null) startWorkCommand = new StartWorkCommandClass(this);
-                return startWorkCommand;
+                Timer.Stop();
+                Timer.Dispose();
+                TimeStringToDisplay = "00 : 00";
             }
-        }
-        private ICommand startBreakCommand;
-        public ICommand StartBreakCommand
-        {
-            get
-            {
-                if (startBreakCommand == null) startBreakCommand = new StartBreakCommandClass(this);
-                return startBreakCommand;
-            }
-        }
-        private ICommand startPauseOrResumeCommand;
-        public ICommand StartPauseOrResumeCommand
-        {
-            get
-            {
-                if (startPauseOrResumeCommand == null) startPauseOrResumeCommand = new StartPauseOrResumeCommandClass(this);
-                return startPauseOrResumeCommand;
-            }
-        }
-        private ICommand quitCommand;
-        public ICommand QuitCommand
-        {
-            get
-            {
-                if (quitCommand == null) quitCommand = new QuitCommandClass();
-                return quitCommand;
-            }
-        }
-        #endregion        
-    }
-    #region CommandClasses    
-    internal class StartWorkCommandClass : ICommand
-    {
-        private readonly MainWindowViewModel mainWindowViewModel;
-        public StartWorkCommandClass(MainWindowViewModel mainWindowViewModel)
-        {
-            this.mainWindowViewModel = mainWindowViewModel;
-        }
-        public event EventHandler? CanExecuteChanged;
-
-        public bool CanExecute(object? parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object? parameter)
-        {
-            if (mainWindowViewModel.Timer != null)
-            {
-                mainWindowViewModel.Timer.Stop();
-                mainWindowViewModel.Timer.Dispose();
-                mainWindowViewModel.TimeStringToDisplay = "00 : 00";
-            }
-            mainWindowViewModel.TitleStringToDisplay = "Work";
-            mainWindowViewModel.Model.StartTimer(55*60);
-            mainWindowViewModel.StartRefreshingTimer();            
-            mainWindowViewModel.Status = TimerStatus.On;
-            mainWindowViewModel.LabelInFirstButton = "Pause";
+            TitleStringToDisplay = "Work";
+            Model.StartTimer(55 * 60);
+            startRefreshingTimer();
+            Status = TimerStatus.On;
+            LabelInFirstButton = "Pause";
 
             Console.Beep(500, 200);
             Console.Beep(1000, 200);
-            MessageBox.Show("It's time to work.");            
+            MessageBox.Show("It's time to work.");
         }
-    }
-    internal class StartBreakCommandClass : ICommand
-    {
-        private readonly MainWindowViewModel mainWindowViewModel;
-        public StartBreakCommandClass(MainWindowViewModel mainWindowViewModel)
+        private void startBreak()
         {
-            this.mainWindowViewModel = mainWindowViewModel;
-        }
-        public event EventHandler? CanExecuteChanged;
-
-        public bool CanExecute(object? parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object? parameter)
-        {
-            if (mainWindowViewModel.Timer != null)
+            if (Timer != null)
             {
-                mainWindowViewModel.Timer.Stop();
-                mainWindowViewModel.Timer.Dispose();
-                mainWindowViewModel.TimeStringToDisplay = "00 : 00";
+                Timer.Stop();
+                Timer.Dispose();
+                TimeStringToDisplay = "00 : 00";
             }
-            mainWindowViewModel.TitleStringToDisplay = "Break";
-            mainWindowViewModel.Model.StartTimer(5*60);
-            mainWindowViewModel.StartRefreshingTimer();
-            mainWindowViewModel.Status = TimerStatus.Paused;
+            TitleStringToDisplay = "Break";
+            Model.StartTimer(5 * 60);
+            startRefreshingTimer();
+            Status = TimerStatus.Paused;
 
-            mainWindowViewModel.LabelInFirstButton = "Pause";
+            LabelInFirstButton = "Pause";
 
             Console.Beep(1000, 200);
             Console.Beep(500, 200);
             MessageBox.Show("It's time to have a break.");
         }
-    }
-    internal class StartPauseOrResumeCommandClass : ICommand
-    {
-        private readonly MainWindowViewModel mainWindowViewModel;
-        public StartPauseOrResumeCommandClass(MainWindowViewModel mainWindowViewModel)
+        private void startPauseOrResume()
         {
-            this.mainWindowViewModel = mainWindowViewModel;
-        }
-        public event EventHandler? CanExecuteChanged;
-
-        public bool CanExecute(object? parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object? parameter)
-        {
-            if (mainWindowViewModel.Timer == null)
+            if (Timer == null)
                 return;
-            if (mainWindowViewModel.Status == TimerStatus.On)
+            if (Status == TimerStatus.On)
             {
-                mainWindowViewModel.Model.PauseTimer();
-                mainWindowViewModel.TitleStringToDisplay += " (Pause)";
-                mainWindowViewModel.LabelInFirstButton = "Resume";
+                Model.PauseTimer();
+                TitleStringToDisplay += " (Pause)";
+                LabelInFirstButton = "Resume";
 
             }
             else
             {
-                mainWindowViewModel.Model.ResumeTimer();
-                mainWindowViewModel.LabelInFirstButton = "Pause";
-                if (mainWindowViewModel.TitleStringToDisplay.StartsWith('W'))
-                    mainWindowViewModel.TitleStringToDisplay = "Work";
+                Model.ResumeTimer();
+                LabelInFirstButton = "Pause";
+                if (TitleStringToDisplay.StartsWith('W'))
+                    TitleStringToDisplay = "Work";
                 else
-                    mainWindowViewModel.TitleStringToDisplay = "Break";
+                    TitleStringToDisplay = "Break";
             }
         }
-    }
-    internal class QuitCommandClass : ICommand
-    {        
-        public event EventHandler? CanExecuteChanged;
-
-        public bool CanExecute(object? parameter)
+        private void quit()
         {
-            return true;
-        }
-
-        public void Execute(object? parameter)
-        {
-           if (MessageBox.Show("Are you sure to quit?","Quit",MessageBoxButton.YesNo,MessageBoxImage.Question)== MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure to quit?", "Quit", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 App.Current.Shutdown();
         }
+        #endregion       
+        #region Commands
+        public ICommand StartWorkCommand
+        {
+            get
+            {
+                return new BaseCommand(startWork);
+            }
+        }
+        public ICommand StartBreakCommand
+        {
+            get
+            {
+                return new BaseCommand(startBreak);
+            }
+        }
+        public ICommand StartPauseOrResumeCommand
+        {
+            get
+            {
+                return new BaseCommand(startPauseOrResume);
+            }
+        }
+        public ICommand QuitCommand
+        {
+            get
+            {
+                return new BaseCommand(quit);
+            }
+        }
+        #endregion        
     }
-    #endregion
 
 }
