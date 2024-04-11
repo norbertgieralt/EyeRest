@@ -8,7 +8,7 @@ using static EyeRest.Models.AppModel;
 
 namespace EyeRest.ViewModels
 {
-    internal class MainWindowViewModel : INotifyPropertyChanged
+    internal class MainWindowViewModel : BaseViewModel
     {
         #region Fields
 
@@ -194,20 +194,7 @@ namespace EyeRest.ViewModels
                 return quitCommand;
             }
         }
-        #endregion
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public void OnPropertChanged(params string[] args)
-        {
-            if (PropertyChanged != null)
-            {
-                foreach (string arg in args)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(arg));
-                }
-            }
-        }
-        #endregion
+        #endregion        
     }
     #region CommandClasses    
     internal class StartWorkCommandClass : ICommand
