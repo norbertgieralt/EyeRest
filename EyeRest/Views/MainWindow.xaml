@@ -7,35 +7,16 @@
         xmlns:vm="clr-namespace:EyeRest.ViewModels"
         mc:Ignorable="d"
         Title="{Binding TimeStringToDisplay2}"
-        Style="{StaticResource MainWindow}">    
+        Style="{StaticResource MainWindow}"
+        SizeToContent="WidthAndHeight"
+        >    
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary Source="MainWindowResources.xaml" />
+    </Window.Resources>
     <Border Style="{StaticResource Border1}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <Label Content="{Binding TitleStringToDisplay}" Style="{StaticResource LabelTitle}" />
-                <Label Content="{Binding TimeStringToDisplay}" Style="{StaticResource LabelTime}" />
-                <Button Content="{Binding LabelInFirstButton}"  Command="{Binding StartPauseOrResumeCommand}" Style="{StaticResource ButtonPauseorResume}"/>
-                <Button Content="Start work"  Command="{Binding StartWorkCommand}" Style="{StaticResource ButtonLargeMainWindow}" />
-                <Button Content="Start break"  Command="{Binding StartBreakCommand}" Style="{StaticResource ButtonLargeMainWindow}" />
-            </StackPanel>
-            <Grid Grid.Row="2" Margin="0,15,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Settings" Style="{StaticResource ButtonSmallMainWindow}"/>
-                <Button Grid.Column="2" Content="Quit" Command="{Binding QuitCommand}" Style="{StaticResource ButtonSmallMainWindow}"/>
-            </Grid>
-            <Label Grid.Row="3" Style="{StaticResource LabelCoprights}" >© 2024 Norbert Gierałt</Label>
-        </Grid>
+        <ContentControl Content="{Binding ActiveViewModel}" />
     </Border>
 </Window>

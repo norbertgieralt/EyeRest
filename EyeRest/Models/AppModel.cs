@@ -50,7 +50,7 @@ namespace EyeRest.Models
             }
             timer = new Timer(1000);
             SecondsOnClock = lengthInSeconds;
-            timer.Elapsed += OnTimedEvent;
+            timer.Elapsed += onTimedEvent;
             timer.AutoReset = true;
             timer.Enabled = true;
             Status = TimerStatus.On;
@@ -65,7 +65,7 @@ namespace EyeRest.Models
             Timer.Start();
             Status = TimerStatus.On;
         }
-        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        private void onTimedEvent(object source, ElapsedEventArgs e)
         {
             SecondsOnClock--;
 
