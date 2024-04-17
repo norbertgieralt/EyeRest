@@ -8,6 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Orientation="Vertical">
         <Label>Here will be the settings.</Label>
-        <Button  Content="Back" Command="{Binding BackFromSettingsCommand}" Style="{StaticResource ButtonSmallMainWindow}"/>
+        <Button  Content="Back" Command="{Binding DataContext.ShowClockCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmallMainWindow}" />
     </StackPanel>
+
 </UserControl>

@@ -48,7 +48,7 @@
         </Style>
         <Style x:Key="ButtonPauseorResume" BasedOn="{StaticResource ButtonLargeMainWindow}" TargetType="Button">
             <Style.Triggers>                
-                <DataTrigger Binding="{Binding Path=TitleStringToDisplay}" Value="Hello!" >
+                <DataTrigger Binding="{Binding Path=DataContext.TitleStringToDisplay, RelativeSource={RelativeSource AncestorType=Window}}" Value="Hello!" >
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </Style.Triggers>

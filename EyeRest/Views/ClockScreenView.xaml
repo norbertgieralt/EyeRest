@@ -15,11 +15,11 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
-                <Label Content="{Binding TitleStringToDisplay}" Style="{StaticResource LabelTitle}" />
-                <Label Content="{Binding TimeStringToDisplay}" Style="{StaticResource LabelTime}" />
-                <Button Content="{Binding LabelInFirstButton}"  Command="{Binding StartPauseOrResumeCommand}" Style="{StaticResource ButtonPauseorResume}"/>
-                <Button Content="Start work"  Command="{Binding StartWorkCommand}" Style="{StaticResource ButtonLargeMainWindow}" />
-                <Button Content="Start break"  Command="{Binding StartBreakCommand}" Style="{StaticResource ButtonLargeMainWindow}" />
+                <Label Content="{Binding DataContext.TitleStringToDisplay,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelTitle}" />
+                <Label Content="{Binding DataContext.TimeStringToDisplay,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelTime}" />
+                <Button Content="{Binding DataContext.LabelInFirstButton,RelativeSource={RelativeSource AncestorType=Window}}"  Command="{Binding DataContext.StartPauseOrResumeCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonPauseorResume}"/>
+                <Button Content="Start work"  Command="{Binding DataContext.StartWorkCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonLargeMainWindow}" />
+                <Button Content="Start break"  Command="{Binding DataContext.StartBreakCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonLargeMainWindow}" />
             </StackPanel>
             <Grid Grid.Row="2" Margin="0,15,0,0">
                 <Grid.ColumnDefinitions>
@@ -27,8 +27,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Settings" Command="{Binding SettingsCommand}" Style="{StaticResource ButtonSmallMainWindow}"/>
-                <Button Grid.Column="2" Content="Quit" Command="{Binding QuitCommand}" Style="{StaticResource ButtonSmallMainWindow}"/>
+                <Button Grid.Column="0" Content="Settings" Command="{Binding DataContext.ShowSettingsCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmallMainWindow}"/>
+                <Button Grid.Column="2" Content="Quit" Command="{Binding DataContext.QuitCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmallMainWindow}"/>
             </Grid>
             <Label Grid.Row="3" Style="{StaticResource LabelCoprights}" >© 2024 Norbert Gierałt</Label>
         </Grid>
