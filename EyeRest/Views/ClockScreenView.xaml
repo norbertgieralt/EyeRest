@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            <Grid>
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
@@ -24,13 +24,12 @@
             <Grid Grid.Row="2" Margin="0,15,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="35"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Content="Settings" Command="{Binding DataContext.ShowSettingsCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmallMainWindow}"/>
                 <Button Grid.Column="2" Content="Quit" Command="{Binding DataContext.QuitCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmallMainWindow}"/>
             </Grid>
-            <Label Grid.Row="3" Style="{StaticResource LabelCoprights}" >© 2024 Norbert Gierałt</Label>
         </Grid>
     </Grid>
 </UserControl>

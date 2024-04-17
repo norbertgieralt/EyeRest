@@ -13,12 +13,12 @@
         <!--#endregion-->
         <!--#region Windows-->
         <Style x:Key="MainWindow" BasedOn="{StaticResource Abstract}" TargetType="{x:Type Window}">
-            <Setter Property="Width" Value="220"/>
-            <Setter Property="MinWidth" Value="220" />
-            <Setter Property="Height" Value="400"/>
-            <Setter Property="MaxWidth" Value="220"/>
-            <Setter Property="MaxHeight" Value="400"/>
             <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
+        </Style>
+        <!--#endregion-->
+        <!--#region  Grids-->
+        <Style x:Key="Grid1" TargetType="{x:Type Grid}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
         <!--#endregion-->
         <!--#region  Buttons-->

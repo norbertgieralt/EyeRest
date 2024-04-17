@@ -9,7 +9,7 @@
         Title="{Binding TimeStringToDisplay2}"
         Style="{StaticResource MainWindow}"
         SizeToContent="WidthAndHeight"
-        >    
+        ResizeMode="CanMinimize">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
@@ -17,6 +17,13 @@
         <ResourceDictionary Source="MainWindowResources.xaml" />
     </Window.Resources>
     <Border Style="{StaticResource Border1}">
-        <ContentControl Content="{Binding ActiveViewModel}" />
+        <Grid Style="{StaticResource Grid1}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <ContentControl Grid.Row="0" Content="{Binding ActiveViewModel}" />
+            <Label Grid.Row="1" Style="{StaticResource LabelCoprights}" >© 2024 Norbert Gierałt</Label>
+        </Grid>
     </Border>
 </Window>
