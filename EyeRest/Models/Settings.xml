@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<settings>
+	<workPeriodInMinutes>55</workPeriodInMinutes>
+	<breakPeriodInMinutes>5</breakPeriodInMinutes>
+</settings>

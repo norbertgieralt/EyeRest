@@ -7,6 +7,7 @@ using System.Security.Cryptography.Xml;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
+using System.Xml.Linq;
 using static EyeRest.Models.AppModel;
 
 namespace EyeRest.ViewModels
@@ -110,7 +111,7 @@ namespace EyeRest.ViewModels
         {
             get
             {
-                return TimeStringToDisplay + titleStringToDisplay;
+                return TimeStringToDisplay + " "+titleStringToDisplay;
             }
             set
             {
@@ -129,6 +130,31 @@ namespace EyeRest.ViewModels
                 OnPropertChanged("Status");
             }
         }
+        private int workPeriodInMinutes;
+
+        public int WorkPeriodInMinutes
+        {
+            get { return workPeriodInMinutes; }
+            set 
+            { 
+                workPeriodInMinutes = value;
+                OnPropertChanged("WorkPeriodInMinutes");
+                saveSettings("workPeriodInMinutes", WorkPeriodInMinutes);
+            }
+        }
+        private int breakPeriodInMinutes;
+
+        public int BreakPeriodInMinutes
+        {
+            get { return breakPeriodInMinutes; }
+            set
+            {
+                breakPeriodInMinutes = value;
+                OnPropertChanged("BreakPeriodInMinutes");
+                saveSettings("breakPeriodInMinutes", BreakPeriodInMinutes);
+            }
+        }
+
         #endregion
         #region Constructor
         public MainWindowViewModel()
@@ -142,6 +168,8 @@ namespace EyeRest.ViewModels
             TimeStringToDisplay = "00:00";
             TitleStringToDisplay = "Hello!";
             LabelInFirstButton = "Hello";
+
+            readSettings();
 
         }
         #endregion
@@ -191,7 +219,7 @@ namespace EyeRest.ViewModels
                 TimeStringToDisplay = "00 : 00";
             }
             TitleStringToDisplay = "Work";
-            Model.StartTimer(55 * 60);
+            Model.StartTimer(WorkPeriodInMinutes * 60);
             startRefreshingTimer();
             Status = TimerStatus.On;
             LabelInFirstButton = "Pause";
@@ -209,7 +237,7 @@ namespace EyeRest.ViewModels
                 TimeStringToDisplay = "00 : 00";
             }
             TitleStringToDisplay = "Break";
-            Model.StartTimer(5 * 60);
+            Model.StartTimer(BreakPeriodInMinutes * 60);
             startRefreshingTimer();
             Status = TimerStatus.Paused;
 
@@ -252,6 +280,18 @@ namespace EyeRest.ViewModels
         private void ShowClock()
         {
             ActiveViewModel= ViewModels[0];
+        }
+        private void readSettings()
+        {
+            XDocument settings = XDocument.Load("Models/Settings.xml");
+            WorkPeriodInMinutes = int.Parse((settings.Root.Element("workPeriodInMinutes").Value));
+            BreakPeriodInMinutes = int.Parse((settings.Root.Element("breakPeriodInMinutes").Value));
+        }
+        private void saveSettings(string elementName, object value, string path = "Models/Settings.xml")
+        {
+            XDocument settings = XDocument.Load(path);
+            settings.Root.Element(elementName).Value = value.ToString();
+            settings.Save(path);
         }
         #endregion       
         #region Commands

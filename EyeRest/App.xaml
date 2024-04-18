@@ -41,19 +41,19 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="ButtonLargeMainWindow" BasedOn="{StaticResource ButtonAbstract}" TargetType="Button">
+        <Style x:Key="ButtonLarge" BasedOn="{StaticResource ButtonAbstract}" TargetType="Button">
             <Setter Property="Width" Value="120"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="Margin" Value="0,0,0,10"/>
         </Style>
-        <Style x:Key="ButtonPauseorResume" BasedOn="{StaticResource ButtonLargeMainWindow}" TargetType="Button">
+        <Style x:Key="ButtonPauseorResume" BasedOn="{StaticResource ButtonLarge}" TargetType="Button">
             <Style.Triggers>                
                 <DataTrigger Binding="{Binding Path=DataContext.TitleStringToDisplay, RelativeSource={RelativeSource AncestorType=Window}}" Value="Hello!" >
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="ButtonSmallMainWindow" BasedOn="{StaticResource ButtonAbstract}" TargetType="Button">
+        <Style x:Key="ButtonSmall" BasedOn="{StaticResource ButtonAbstract}" TargetType="Button">
             <Setter Property="Width" Value="60"/>
             <Setter Property="Height" Value="35"/>
             <Setter Property="Margin" Value="5" />
@@ -88,6 +88,34 @@
             <Setter Property="FontSize" Value="35"/>
             <Setter Property="Margin" Value="0,5,0,0"/>
         </Style>
-        <!--#endregion-->        
+        <Style x:Key="LabelSettings" BasedOn="{StaticResource LabelAbstract}" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <!--#endregion-->
+        <!--#region  TextBoxes-->
+        <Style x:Key="TextBoxAbstract"  TargetType="TextBox">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="TextBox1" BasedOn="{StaticResource TextBoxAbstract}" TargetType="TextBox">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="30" />
+        </Style>
+        <!--#endregion-->
+        <!--#region  Comboboxes-->
+        <Style x:Key="ComboBoxAbstract"  TargetType="ComboBox">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="ComboBox1" BasedOn="{StaticResource ComboBoxAbstract}" TargetType="ComboBox">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="30" />
+        </Style>
+        <!--#endregion-->
     </Application.Resources>
 </Application>
