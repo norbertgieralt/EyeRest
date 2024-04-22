@@ -2,4 +2,5 @@
 <settings>
 	<workPeriodInMinutes>55</workPeriodInMinutes>
 	<breakPeriodInMinutes>5</breakPeriodInMinutes>
+	<language>en</language>
 </settings>

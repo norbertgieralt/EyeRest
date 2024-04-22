@@ -1,6 +1,8 @@
 ﻿using EyeRest.Helpers;
 using EyeRest.Models;
+using EyeRest.Models.Languages;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Security.Cryptography.Xml;
@@ -9,6 +11,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
 using static EyeRest.Models.AppModel;
+using static EyeRest.Models.Languages.Languages;
 
 namespace EyeRest.ViewModels
 {
@@ -154,22 +157,61 @@ namespace EyeRest.ViewModels
                 saveSettings("breakPeriodInMinutes", BreakPeriodInMinutes);
             }
         }
+        private Dictionary<string,string> translations;
+
+        public Dictionary<string, string> Translations
+        {
+            get { return translations; }
+            set
+            {
+                translations = value;
+                OnPropertChanged("Translations");
+            }
+        }
+        private string language;
+
+        public string Language
+        {
+            get { return language; }
+            set
+            {
+                language = value;
+                OnPropertChanged("Language");
+                Translations = GetTranslationsDictionary(language);
+                OnPropertChanged("LabelInFirstButton");
+                saveSettings("language", Language);
+            }
+        }
+        private List<string> possibleLanguages;
+
+        public List<string> PossibleLanguages
+        {
+            get { return possibleLanguages; }
+            set { possibleLanguages = value; }
+        }
+
 
         #endregion
         #region Constructor
         public MainWindowViewModel()
-        {
+        {                  
+
             ViewModels = new ObservableCollection<BaseViewModel>();
             ViewModels.Add(new ClockScreenViewModel());
             ViewModels.Add(new SettingsViewModel());
 
+            readSettings();
+            loadLanguage();
+            
+            
+
             ShowClock();
             model = new AppModel();
             TimeStringToDisplay = "00:00";
-            TitleStringToDisplay = "Hello!";
-            LabelInFirstButton = "Hello";
+            TitleStringToDisplay = Translations["Hello!"];
+            LabelInFirstButton = "";
 
-            readSettings();
+
 
         }
         #endregion
@@ -198,15 +240,15 @@ namespace EyeRest.ViewModels
                 TimeStringToDisplay = "00 : 00";
                 OnPropertChanged("TimeStringToDisplay");
                 OnPropertChanged("TimeStringToDisplay2");
-                if (TitleStringToDisplay == "Work")
+                if (TitleStringToDisplay == Translations["Work"])
                 {
                     StartBreakCommand.Execute(this);
-                    TitleStringToDisplay = "Break";
+                    TitleStringToDisplay = Translations["Break"];
                 }
-                else if (TitleStringToDisplay == "Break")
+                else if (TitleStringToDisplay == Translations["Break"])
                 {
                     StartWorkCommand.Execute(this);
-                    TitleStringToDisplay = "Work";
+                    TitleStringToDisplay = Translations["Work"];
                 }
             }
         }
@@ -218,15 +260,15 @@ namespace EyeRest.ViewModels
                 Timer.Dispose();
                 TimeStringToDisplay = "00 : 00";
             }
-            TitleStringToDisplay = "Work";
+            TitleStringToDisplay = Translations["Work"];
             Model.StartTimer(WorkPeriodInMinutes * 60);
             startRefreshingTimer();
             Status = TimerStatus.On;
-            LabelInFirstButton = "Pause";
+            LabelInFirstButton = Translations["Pause"]; ;
 
             Console.Beep(500, 200);
             Console.Beep(1000, 200);
-            MessageBox.Show("It's time to work.");
+            MessageBox.Show(Translations["It's time to work."]);
         }
         private void startBreak()
         {
@@ -236,16 +278,16 @@ namespace EyeRest.ViewModels
                 Timer.Dispose();
                 TimeStringToDisplay = "00 : 00";
             }
-            TitleStringToDisplay = "Break";
+            TitleStringToDisplay = Translations["Break"];
             Model.StartTimer(BreakPeriodInMinutes * 60);
             startRefreshingTimer();
-            Status = TimerStatus.Paused;
+            Status = TimerStatus.On;
 
-            LabelInFirstButton = "Pause";
+            LabelInFirstButton = Translations["Pause"];
 
             Console.Beep(1000, 200);
             Console.Beep(500, 200);
-            MessageBox.Show("It's time to have a break.");
+            MessageBox.Show(Translations["It's time to have a break."]);
         }
         private void startPauseOrResume()
         {
@@ -254,23 +296,23 @@ namespace EyeRest.ViewModels
             if (Status == TimerStatus.On)
             {
                 Model.PauseTimer();
-                TitleStringToDisplay += " (Pause)";
-                LabelInFirstButton = "Resume";
+                TitleStringToDisplay += " "+ Translations["(Paused)"];
+                LabelInFirstButton = Translations["Resume"];
 
             }
             else
             {
                 Model.ResumeTimer();
-                LabelInFirstButton = "Pause";
-                if (TitleStringToDisplay.StartsWith('W'))
-                    TitleStringToDisplay = "Work";
+                LabelInFirstButton = Translations["Pause"];
+                if (TitleStringToDisplay == Translations["Work"]+ " " + Translations["(Paused)"])
+                    TitleStringToDisplay = Translations["Work"];
                 else
-                    TitleStringToDisplay = "Break";
+                    TitleStringToDisplay =Translations["Break"];
             }
         }
         private void quit()
         {
-            if (MessageBox.Show("Are you sure to quit?", "Quit", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(Translations["Are you sure to quit?"], Translations["Quit"], MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 App.Current.Shutdown();
         }
         private void showSettings()
@@ -286,12 +328,21 @@ namespace EyeRest.ViewModels
             XDocument settings = XDocument.Load("Models/Settings.xml");
             WorkPeriodInMinutes = int.Parse((settings.Root.Element("workPeriodInMinutes").Value));
             BreakPeriodInMinutes = int.Parse((settings.Root.Element("breakPeriodInMinutes").Value));
+            
         }
         private void saveSettings(string elementName, object value, string path = "Models/Settings.xml")
         {
             XDocument settings = XDocument.Load(path);
             settings.Root.Element(elementName).Value = value.ToString();
             settings.Save(path);
+        }
+        private void loadLanguage()
+        {
+            PossibleLanguages = Languages.GetPossibleLanguages();
+            Translations = new Dictionary<string, string>();
+            XDocument settings = XDocument.Load("Models/Settings.xml");
+            Language = settings.Root.Element("language").Value;
+                       
         }
         #endregion       
         #region Commands
@@ -338,7 +389,6 @@ namespace EyeRest.ViewModels
             }
         }
         #endregion
-
     }
 
 }

@@ -7,9 +7,7 @@
         xmlns:vm="clr-namespace:EyeRest.ViewModels"
         mc:Ignorable="d"
         Title="{Binding TimeStringToDisplay2}"
-        Style="{StaticResource MainWindow}"
-        SizeToContent="WidthAndHeight"
-        ResizeMode="CanMinimize">
+        Style="{StaticResource MainWindow}">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>

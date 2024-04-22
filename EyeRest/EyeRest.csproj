@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="Models\Languages\Languages.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Models\Settings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

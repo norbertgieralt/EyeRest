@@ -14,6 +14,8 @@
         <!--#region Windows-->
         <Style x:Key="MainWindow" BasedOn="{StaticResource Abstract}" TargetType="{x:Type Window}">
             <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
+            <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+            <Setter Property="ResizeMode" Value="CanMinimize"/>
         </Style>
         <!--#endregion-->
         <!--#region  Grids-->
@@ -26,6 +28,7 @@
             <Setter Property="FontFamily" Value="Bold"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="BorderThickness" Value="5,2,5,2"/>
+            <Setter Property="ClipToBounds" Value="False" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -47,8 +50,8 @@
             <Setter Property="Margin" Value="0,0,0,10"/>
         </Style>
         <Style x:Key="ButtonPauseorResume" BasedOn="{StaticResource ButtonLarge}" TargetType="Button">
-            <Style.Triggers>                
-                <DataTrigger Binding="{Binding Path=DataContext.TitleStringToDisplay, RelativeSource={RelativeSource AncestorType=Window}}" Value="Hello!" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Value="" >
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -113,8 +116,8 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
         <Style x:Key="ComboBox1" BasedOn="{StaticResource ComboBoxAbstract}" TargetType="ComboBox">
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Height" Value="30" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Height" Value="25" />
         </Style>
         <!--#endregion-->
     </Application.Resources>

@@ -25,15 +25,15 @@
                 <RowDefinition Height="30" />
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.Row="0" Content="Language" Style="{StaticResource LabelSettings}" IsEnabled="False" />
-            <ComboBox Grid.Column="1" Grid.Row="0" Width="150" Height="25" SelectedIndex="0" IsEnabled="False" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                <ComboBoxItem>English</ComboBoxItem>
+            <Label Grid.Column="0" Grid.Row="0" Content="{Binding DataContext.Translations[Language],RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}" />
+            <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding DataContext.PossibleLanguages,RelativeSource={RelativeSource AncestorType=Window}}" SelectedItem="{Binding DataContext.Language,RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}" Style="{StaticResource ComboBox1}">
+
             </ComboBox>
-            <Label Grid.Column="0" Grid.Row="1" Content="Work period duration (minutes)" Style="{StaticResource LabelSettings}" />
+            <Label Grid.Column="0" Grid.Row="1" Content="{Binding DataContext.Translations[Work period duration (minutes)],RelativeSource={RelativeSource AncestorType=Window}}"  Style="{StaticResource LabelSettings}" />
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding DataContext.WorkPeriodInMinutes,RelativeSource={RelativeSource AncestorType=Window}}"  Style="{StaticResource TextBox1}" />
-            <Label Grid.Column="0" Grid.Row="2" Content="Break period duration (minutes)" Style="{StaticResource LabelSettings}" />
+            <Label Grid.Column="0" Grid.Row="2" Content="{Binding DataContext.Translations[Break period duration (minutes)],RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}"  />
             <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding DataContext.BreakPeriodInMinutes,RelativeSource={RelativeSource AncestorType=Window}}"  Style="{StaticResource TextBox1}" />
-            <Button Grid.Column="0" Grid.Row="4" Command="{Binding DataContext.ShowClockCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonLarge}"  Content="Back" Grid.ColumnSpan="2"/>
+            <Button Grid.Column="0" Grid.Row="4" Command="{Binding DataContext.ShowClockCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonLarge}"  Content="{Binding DataContext.Translations[Back],RelativeSource={RelativeSource AncestorType=Window}}" Grid.ColumnSpan="2"/>
         </Grid>
         
     </Grid>

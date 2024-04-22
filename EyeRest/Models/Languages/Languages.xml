@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+	<text>
+		<name>Settings</name>
+		<en>Settings</en>
+		<pl>Ustawienia</pl>
+		<ger>Einstellungen</ger>
+	</text>
+	<text>
+		<name>Quit</name>
+		<en>Quit</en>
+		<pl>Wyjdź</pl>
+		<ger>Aufhören</ger>
+	</text>
+	<text>
+		<name>Start work</name>
+		<en>Start work</en>
+		<pl>Rozpocznij pracę</pl>
+		<ger>Beginne die Arbeit</ger>
+	</text>
+	<text>
+		<name>Start break</name>
+		<en>Start work</en>
+		<pl>Rozpocznij przerwę</pl>
+		<ger>Beginne die Pause</ger>
+	</text>
+	<text>
+		<name>Language</name>
+		<en>Language</en>
+		<pl>Język</pl>
+		<ger>Sprache</ger>
+	</text>
+	<text>
+		<name>Work period duration (minutes)</name>
+		<en>Work period duration (minutes)</en>
+		<pl>Czas trwania okresu pracy (minuty)</pl>
+		<ger>Dauer der Arbeitszeit (Minuten)</ger>
+	</text>
+	<text>
+		<name>Break period duration (minutes)</name>
+		<en>Break period duration (minutes)</en>
+		<pl>Czas trwania okresu przerwy (minuty)</pl>
+		<ger>Dauer der Pause (Minuten)</ger>
+	</text>
+	<text>
+		<name>Back</name>
+		<en>Back</en>
+		<pl>Wróć</pl>
+		<ger>Zurück</ger>
+	</text>
+	<text>
+		<name>Hello!</name>
+		<en>Hello!</en>
+		<pl>Witaj!</pl>
+		<ger>Hallo!</ger>
+	</text>
+	<text>
+		<name>Hello</name>
+		<en>Hello</en>
+		<pl>Witaj</pl>
+		<ger>Hallo</ger>
+	</text>
+	<text>
+		<name>Work</name>
+		<en>Work</en>
+		<pl>Praca</pl>
+		<ger>Arbeit</ger>
+	</text>
+	<text>
+		<name>Break</name>
+		<en>Break</en>
+		<pl>Przerwa</pl>
+		<ger>Pause</ger>
+	</text>
+	<text>
+		<name>Pause</name>
+		<en>Pause</en>
+		<pl>Wstrzymaj</pl>
+		<ger>Halten</ger>
+	</text>
+	<text>
+		<name>(Paused)</name>
+		<en>(Paused)</en>
+		<pl>(Wstrzymano)</pl>
+		<ger>(Pausierte)</ger>
+	</text>
+	<text>
+		<name>Resume</name>
+		<en>Resume</en>
+		<pl>Wznów</pl>
+		<ger>Wieder aufnehmen</ger>
+	</text>
+	<text>
+		<name>It's time to work.</name>
+		<en>It's time to work.</en>
+		<pl>Czas na pracę.</pl>
+		<ger>Es ist Zeit zu arbeiten.</ger>
+	</text>
+	<text>
+		<name>It's time to have a break.</name>
+		<en>It's time to have a break.</en>
+		<pl>Czas na przerwę.</pl>
+		<ger>Es ist Zeit zu Pause.</ger>
+	</text>
+	<text>
+		<name>Are you sure to quit?</name>
+		<en>Are you sure to quit?</en>
+		<pl>Czy na pewno chcesz wyjść?</pl>
+		<ger>Sind Sie sicher, dass Sie aufhören?</ger>
+	</text>
+</languages>
