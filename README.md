@@ -14,6 +14,8 @@
 ![image](https://github.com/norbertgieralt/EyeRest/assets/132151413/f6131da1-f3b3-410a-9840-29e018859aca)
 ![image](https://github.com/norbertgieralt/EyeRest/assets/132151413/29748837-ead1-47c6-bf5a-7682ef2ef194)
 ![image](https://github.com/norbertgieralt/EyeRest/assets/132151413/8351839b-45ab-45c8-9151-84c854d459a9)
+![image](https://github.com/norbertgieralt/EyeRest/assets/132151413/362e6a9d-2fdb-4d19-aec5-6baebed7e2fa)
+
 ## Mockups
 ![image](https://github.com/norbertgieralt/EyeRest/assets/132151413/0b159792-9a84-4cdb-aab4-5be082befae8)
 ![image](https://github.com/norbertgieralt/EyeRest/assets/132151413/ea5b555a-f145-4f65-b758-7e9b7cf05a60)
