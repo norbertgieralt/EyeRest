@@ -121,6 +121,14 @@ namespace EyeRest.ViewModels
                 timeStringToDisplay2 = value;
             }
         }
+        private AppStatus appStatus;
+
+        public AppStatus AppStatus
+        {
+            get { return appStatus; }
+            set { appStatus = value; }
+        }
+
 
         private TimerStatus status;
 
@@ -178,7 +186,31 @@ namespace EyeRest.ViewModels
                 language = value;
                 OnPropertyChanged("Language");
                 saveSettings("language", Language);
-                Translations = GetTranslationsDictionary(Language);           
+                Translations = GetTranslationsDictionary(Language);
+                if (AppStatus == AppStatus.Initial)
+                {
+                    TitleStringToDisplay = Translations["Hello!"];
+                }
+                else if (AppStatus == AppStatus.Work)
+                {
+                    TitleStringToDisplay = Translations["Work"];
+                    LabelInFirstButton = Translations["Pause"];
+                }
+                else if (AppStatus == AppStatus.Break)
+                {
+                    TitleStringToDisplay = Translations["Break"];
+                    LabelInFirstButton = Translations["Pause"];
+                }
+                else if (AppStatus == AppStatus.WorkPaused)
+                {
+                    TitleStringToDisplay = Translations["Work (Paused)"];
+                    LabelInFirstButton = Translations["Resume"];
+                }
+                else if (AppStatus == AppStatus.BreakPaused)
+                {
+                    TitleStringToDisplay = Translations["Break (Paused)"];
+                    LabelInFirstButton = Translations["Resume"];
+                }
             }
         }
         private List<string> possibleLanguages;
@@ -199,6 +231,7 @@ namespace EyeRest.ViewModels
             ViewModels.Add(new ClockScreenViewModel());
             ViewModels.Add(new SettingsViewModel());
 
+            AppStatus = AppStatus.Initial;
             readSettings();
             loadLanguage();
             
@@ -262,7 +295,7 @@ namespace EyeRest.ViewModels
             TitleStringToDisplay = Translations["Work"];
             Model.StartTimer(WorkPeriodInMinutes * 60);
             startRefreshingTimer();
-            Status = TimerStatus.On;
+            AppStatus = AppStatus.Work;
             LabelInFirstButton = Translations["Pause"]; ;
 
             Console.Beep(500, 200);
@@ -280,8 +313,7 @@ namespace EyeRest.ViewModels
             TitleStringToDisplay = Translations["Break"];
             Model.StartTimer(BreakPeriodInMinutes * 60);
             startRefreshingTimer();
-            Status = TimerStatus.On;
-
+            AppStatus = AppStatus.Break;
             LabelInFirstButton = Translations["Pause"];
 
             Console.Beep(1000, 200);
@@ -292,21 +324,33 @@ namespace EyeRest.ViewModels
         {
             if (Timer == null)
                 return;
-            if (Status == TimerStatus.On)
+            else if (AppStatus==AppStatus.Work)
             {
                 Model.PauseTimer();
-                TitleStringToDisplay += " "+ Translations["(Paused)"];
+                TitleStringToDisplay = Translations["Work (Paused)"];
                 LabelInFirstButton = Translations["Resume"];
-
+                AppStatus = AppStatus.WorkPaused;
             }
-            else
+            else if (AppStatus == AppStatus.Break)
+            {
+                Model.PauseTimer();
+                TitleStringToDisplay = Translations["Break (Paused)"];
+                LabelInFirstButton = Translations["Resume"];
+                AppStatus = AppStatus.BreakPaused;
+            }
+            else if (AppStatus == AppStatus.WorkPaused)
             {
                 Model.ResumeTimer();
+                TitleStringToDisplay = Translations["Work"];
                 LabelInFirstButton = Translations["Pause"];
-                if (TitleStringToDisplay == Translations["Work"]+ " " + Translations["(Paused)"])
-                    TitleStringToDisplay = Translations["Work"];
-                else
-                    TitleStringToDisplay =Translations["Break"];
+                AppStatus = AppStatus.Work;
+            }
+            else if (AppStatus == AppStatus.BreakPaused)
+            {
+                Model.ResumeTimer();
+                TitleStringToDisplay = Translations["Break"];
+                LabelInFirstButton = Translations["Pause"];
+                AppStatus = AppStatus.Break;
             }
         }
         private void quit()

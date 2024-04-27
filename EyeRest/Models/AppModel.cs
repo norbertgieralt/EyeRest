@@ -115,6 +115,10 @@ namespace EyeRest.Models
         {
             On, Paused, Off
         }
+        public enum AppStatus
+        {
+            Initial, Work, Break, WorkPaused, BreakPaused
+        }
         #endregion
     }
 }

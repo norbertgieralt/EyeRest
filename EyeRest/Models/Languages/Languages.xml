@@ -73,6 +73,18 @@
 		<ger>Pause</ger>
 	</text>
 	<text>
+		<name>Work (Paused)</name>
+		<en>Work (Paused)</en>
+		<pl>Praca (Wstrzymano)</pl>
+		<ger>Arbeit (Pausierte)</ger>
+	</text>
+	<text>
+		<name>Break (Paused)</name>
+		<en>Break (Paused)</en>
+		<pl>Przerwa (Wstrzymano)</pl>
+		<ger>Pause (Pausierte)</ger>
+	</text>
+	<text>
 		<name>Pause</name>
 		<en>Pause</en>
 		<pl>Wstrzymaj</pl>
@@ -107,5 +119,5 @@
 		<en>Are you sure to quit?</en>
 		<pl>Czy na pewno chcesz wyjść?</pl>
 		<ger>Sind Sie sicher, dass Sie aufhören?</ger>
-	</text>
+	</text>		
 </languages>
