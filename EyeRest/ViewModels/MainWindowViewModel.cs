@@ -211,6 +211,7 @@ namespace EyeRest.ViewModels
                     TitleStringToDisplay = Translations["Break (Paused)"];
                     LabelInFirstButton = Translations["Resume"];
                 }
+                OnPropertyChanged("TimeStringToDisplay2");
             }
         }
         private List<string> possibleLanguages;
