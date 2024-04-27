@@ -11,7 +11,7 @@ namespace EyeRest.ViewModels
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;
-        public void OnPropertChanged(params string[] args)
+        public void OnPropertyChanged(params string[] args)
         {
             if (PropertyChanged != null)
             {

@@ -34,7 +34,7 @@ namespace EyeRest.ViewModels
             set
             {
                 activeViewModel = value;
-                OnPropertChanged("ActiveViewModel");
+                OnPropertyChanged("ActiveViewModel");
             }
         }
         private MainWindowViewModel mainWindowViewModel;
@@ -76,7 +76,7 @@ namespace EyeRest.ViewModels
             set
             {
                 titleStringToDisplay = value;
-                OnPropertChanged("TitleStringToDisplay");
+                OnPropertyChanged("TitleStringToDisplay");
             }
         }
         private string labelInFirstButton;
@@ -90,7 +90,7 @@ namespace EyeRest.ViewModels
             set
             {
                 labelInFirstButton = value;
-                OnPropertChanged("LabelInFirstButton");
+                OnPropertyChanged("LabelInFirstButton");
             }
         }
 
@@ -105,7 +105,7 @@ namespace EyeRest.ViewModels
             set
             {
                 timeStringToDisplay = value;
-                OnPropertChanged("TimeStringToDisplay");
+                OnPropertyChanged("TimeStringToDisplay");
             }
         }
         private string timeStringToDisplay2;
@@ -130,7 +130,7 @@ namespace EyeRest.ViewModels
             set
             {
                 model.Status = value;
-                OnPropertChanged("Status");
+                OnPropertyChanged("Status");
             }
         }
         private int workPeriodInMinutes;
@@ -141,7 +141,7 @@ namespace EyeRest.ViewModels
             set 
             { 
                 workPeriodInMinutes = value;
-                OnPropertChanged("WorkPeriodInMinutes");
+                OnPropertyChanged("WorkPeriodInMinutes");
                 saveSettings("workPeriodInMinutes", WorkPeriodInMinutes);
             }
         }
@@ -153,7 +153,7 @@ namespace EyeRest.ViewModels
             set
             {
                 breakPeriodInMinutes = value;
-                OnPropertChanged("BreakPeriodInMinutes");
+                OnPropertyChanged("BreakPeriodInMinutes");
                 saveSettings("breakPeriodInMinutes", BreakPeriodInMinutes);
             }
         }
@@ -165,7 +165,7 @@ namespace EyeRest.ViewModels
             set
             {
                 translations = value;
-                OnPropertChanged("Translations");
+                OnPropertyChanged("Translations");
             }
         }
         private string language;
@@ -176,10 +176,9 @@ namespace EyeRest.ViewModels
             set
             {
                 language = value;
-                OnPropertChanged("Language");
-                Translations = GetTranslationsDictionary(language);
-                OnPropertChanged("LabelInFirstButton");
+                OnPropertyChanged("Language");
                 saveSettings("language", Language);
+                Translations = GetTranslationsDictionary(Language);           
             }
         }
         private List<string> possibleLanguages;
@@ -231,15 +230,15 @@ namespace EyeRest.ViewModels
         }
         private void onTimedEvent(object source, ElapsedEventArgs e)
         {
-            OnPropertChanged("Seconds");
-            OnPropertChanged("TimeStringToDisplay");
-            OnPropertChanged("TimeStringToDisplay2");
+            OnPropertyChanged("Seconds");
+            OnPropertyChanged("TimeStringToDisplay");
+            OnPropertyChanged("TimeStringToDisplay2");
 
             if (Seconds == 0)
             {
                 TimeStringToDisplay = "00 : 00";
-                OnPropertChanged("TimeStringToDisplay");
-                OnPropertChanged("TimeStringToDisplay2");
+                OnPropertyChanged("TimeStringToDisplay");
+                OnPropertyChanged("TimeStringToDisplay2");
                 if (TitleStringToDisplay == Translations["Work"])
                 {
                     StartBreakCommand.Execute(this);
@@ -268,7 +267,7 @@ namespace EyeRest.ViewModels
 
             Console.Beep(500, 200);
             Console.Beep(1000, 200);
-            MessageBox.Show(Translations["It's time to work."]);
+            MessageBox.Show(Translations["It's time to work."]);            
         }
         private void startBreak()
         {
