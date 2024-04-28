@@ -47,9 +47,9 @@ namespace EyeRest.Models.Languages
 
             return values;
         }
-        public static ObservableCollection<Language> GetPossibleLanguages()
+        public static List<Language> GetPossibleLanguages()
         {
-            ObservableCollection<Language> list = new ObservableCollection<Language>();
+            List<Language> list = new List<Language>();
             list.Add(new Language("en"));
             list.Add(new Language ("ger"));
             list.Add(new Language("pl"));

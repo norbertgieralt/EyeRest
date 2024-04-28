@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Timers;
 using System.Windows;
@@ -190,7 +191,7 @@ namespace EyeRest.ViewModels
                 if (Translations!=null)
                 {
                     saveSettings("language", Language.Name);
-                    Translations = GetTranslationsDictionary(Language);
+                    Translations = GetTranslationsDictionary(Language);                    
                     foreach (Language item in PossibleLanguages)
                     {
                         item.SetTranslation(Translations);                        
@@ -224,14 +225,15 @@ namespace EyeRest.ViewModels
 
             }
         }
-        private ObservableCollection<Language> possibleLanguages;
+        private List<Language> possibleLanguages;
 
-        public ObservableCollection<Language> PossibleLanguages
+        public List<Language> PossibleLanguages
         {
             get { return possibleLanguages; }
             set 
             { 
                 possibleLanguages = value;
+                OnPropertyChanged("PossibleLanguages");
             }
         }
         #endregion

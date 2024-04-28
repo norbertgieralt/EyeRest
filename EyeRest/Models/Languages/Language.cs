@@ -1,27 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EyeRest.Models.Languages
 {
-    public class Language
-    {
-		#region Fields and Properties		
-		private string name;
+    public class Language :INotifyPropertyChanged
+    {        
+        #region Fields and Properties		
+        private string name;
 
 		public string Name
 		{
 			get { return name; }
-			set { name = value; }
+			set { name = value;
+                OnPropertyChanged("Name");
+            }
 		}
 		private string translation;
 
 		public string Translation
 		{
 			get { return translation; }
-			set { translation = value; }
+			set { translation = value;
+                OnPropertyChanged("Translation");
+            }
 		}
         #endregion
         #region Constructor
@@ -29,17 +34,25 @@ namespace EyeRest.Models.Languages
         {
             this.Name= name;
         }
-        public Language(string name,string translation)
-        {
-            this.Name = name;
-			this.Translation = translation;
-        }
         #endregion
         #region Methods
         public void SetTranslation(Dictionary<string, string> translation)
 		{
 			this.Translation = translation[Name];
 		}
-		#endregion
-	}
+        #endregion
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged(params string[] args)
+        {
+            if (PropertyChanged != null)
+            {
+                foreach (string arg in args)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(arg));
+                }
+            }
+        }
+        #endregion
+    }
 }
