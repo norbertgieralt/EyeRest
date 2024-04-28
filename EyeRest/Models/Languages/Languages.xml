@@ -119,5 +119,23 @@
 		<en>Are you sure to quit?</en>
 		<pl>Czy na pewno chcesz wyjść?</pl>
 		<ger>Sind Sie sicher, dass Sie aufhören?</ger>
-	</text>		
+	</text>
+	<text>
+		<name>en</name>
+		<en>English</en>
+		<pl>Angielski</pl>
+		<ger>Englisch</ger>
+	</text>
+	<text>
+		<name>pl</name>
+		<en>Polish</en>
+		<pl>Polski</pl>
+		<ger>Polnisch</ger>
+	</text>
+	<text>
+		<name>ger</name>
+		<en>German</en>
+		<pl>Niemiecki</pl>
+		<ger>Deutsch</ger>
+	</text>
 </languages>

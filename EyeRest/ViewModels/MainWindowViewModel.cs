@@ -8,6 +8,8 @@ using System.ComponentModel;
 using System.Security.Cryptography.Xml;
 using System.Timers;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Xml.Linq;
 using static EyeRest.Models.AppModel;
@@ -176,53 +178,62 @@ namespace EyeRest.ViewModels
                 OnPropertyChanged("Translations");
             }
         }
-        private string language;
+        private Language language;
 
-        public string Language
+        public Language Language
         {
             get { return language; }
             set
             {
                 language = value;
                 OnPropertyChanged("Language");
-                saveSettings("language", Language);
-                Translations = GetTranslationsDictionary(Language);
-                if (AppStatus == AppStatus.Initial)
+                if (Translations!=null)
                 {
-                    TitleStringToDisplay = Translations["Hello!"];
+                    saveSettings("language", Language.Name);
+                    Translations = GetTranslationsDictionary(Language);
+                    foreach (Language item in PossibleLanguages)
+                    {
+                        item.SetTranslation(Translations);                        
+                    }
+                    if (AppStatus == AppStatus.Initial)
+                    {
+                        TitleStringToDisplay = Translations["Hello!"];
+                    }
+                    else if (AppStatus == AppStatus.Work)
+                    {
+                        TitleStringToDisplay = Translations["Work"];
+                        LabelInFirstButton = Translations["Pause"];
+                    }
+                    else if (AppStatus == AppStatus.Break)
+                    {
+                        TitleStringToDisplay = Translations["Break"];
+                        LabelInFirstButton = Translations["Pause"];
+                    }
+                    else if (AppStatus == AppStatus.WorkPaused)
+                    {
+                        TitleStringToDisplay = Translations["Work (Paused)"];
+                        LabelInFirstButton = Translations["Resume"];
+                    }
+                    else if (AppStatus == AppStatus.BreakPaused)
+                    {
+                        TitleStringToDisplay = Translations["Break (Paused)"];
+                        LabelInFirstButton = Translations["Resume"];
+                    }
+                    OnPropertyChanged("TimeStringToDisplay2");
                 }
-                else if (AppStatus == AppStatus.Work)
-                {
-                    TitleStringToDisplay = Translations["Work"];
-                    LabelInFirstButton = Translations["Pause"];
-                }
-                else if (AppStatus == AppStatus.Break)
-                {
-                    TitleStringToDisplay = Translations["Break"];
-                    LabelInFirstButton = Translations["Pause"];
-                }
-                else if (AppStatus == AppStatus.WorkPaused)
-                {
-                    TitleStringToDisplay = Translations["Work (Paused)"];
-                    LabelInFirstButton = Translations["Resume"];
-                }
-                else if (AppStatus == AppStatus.BreakPaused)
-                {
-                    TitleStringToDisplay = Translations["Break (Paused)"];
-                    LabelInFirstButton = Translations["Resume"];
-                }
-                OnPropertyChanged("TimeStringToDisplay2");
+
             }
         }
-        private List<string> possibleLanguages;
+        private ObservableCollection<Language> possibleLanguages;
 
-        public List<string> PossibleLanguages
+        public ObservableCollection<Language> PossibleLanguages
         {
             get { return possibleLanguages; }
-            set { possibleLanguages = value; }
+            set 
+            { 
+                possibleLanguages = value;
+            }
         }
-
-
         #endregion
         #region Constructor
         public MainWindowViewModel()
@@ -382,11 +393,23 @@ namespace EyeRest.ViewModels
         }
         private void loadLanguage()
         {
-            PossibleLanguages = Languages.GetPossibleLanguages();
-            Translations = new Dictionary<string, string>();
             XDocument settings = XDocument.Load("Models/Settings.xml");
-            Language = settings.Root.Element("language").Value;
-                       
+            PossibleLanguages = Languages.GetPossibleLanguages();
+            foreach (Language item in PossibleLanguages)
+            {
+                if (item.Name == settings.Root.Element("language").Value)
+                    Language = item;
+            }            
+            Translations = new Dictionary<string, string>();
+            Translations = Languages.GetTranslationsDictionary(Language);
+            foreach (Language item in possibleLanguages)
+            {
+                item.SetTranslation(Translations);
+            }
+            if (Language==null)
+            {
+                throw new Exception("Language can't be null!");
+            }
         }
         #endregion       
         #region Commands

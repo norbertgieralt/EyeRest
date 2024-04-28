@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Xml.Linq;
@@ -27,14 +28,14 @@ namespace EyeRest.Models.Languages
             }
             return keys;
         }
-        private static List<string> getValues(string language)
+        private static List<string> getValues(Language language)
         {
             List<string> values = new List<string>();
 
             XDocument xml = XDocument.Load("Models/Languages/Languages.xml");
 
             var query = from element in xml.Root.Descendants("text")
-                        select element.Element(language.ToString()).Value;
+                        select element.Element(language.Name).Value;
 
             IEnumerable<string> results = new List<string>();
             results = query;
@@ -46,15 +47,16 @@ namespace EyeRest.Models.Languages
 
             return values;
         }
-        public static List<string> GetPossibleLanguages()
+        public static ObservableCollection<Language> GetPossibleLanguages()
         {
-            List<string> list = new List<string>();
-            list.Add("en");
-            list.Add("ger");
-            list.Add("pl");
+            ObservableCollection<Language> list = new ObservableCollection<Language>();
+            list.Add(new Language("en"));
+            list.Add(new Language ("ger"));
+            list.Add(new Language("pl"));
+            
             return list;
         }
-        public static Dictionary<string,string> GetTranslationsDictionary(string language)
+        public static Dictionary<string,string> GetTranslationsDictionary(Language language)
         {
             Dictionary<string,string> dictionary = new Dictionary<string,string>();
             List<string> keys = getKeys();
