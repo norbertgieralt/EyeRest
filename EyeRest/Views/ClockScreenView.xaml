@@ -14,21 +14,30 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
                 <Label Content="{Binding DataContext.TitleStringToDisplay,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelTitle}" />
                 <Label Content="{Binding DataContext.TimeStringToDisplay,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelTime}" />
                 <Button Content="{Binding DataContext.LabelInFirstButton,RelativeSource={RelativeSource AncestorType=Window}}"  Command="{Binding DataContext.StartPauseOrResumeCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonPauseorResume}"/>
                 <Button Content="{Binding DataContext.Translations[Start work],RelativeSource={RelativeSource AncestorType=Window}}"  Command="{Binding DataContext.StartWorkCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonLarge}" />
                 <Button Content="{Binding DataContext.Translations[Start break],RelativeSource={RelativeSource AncestorType=Window}}"  Command="{Binding DataContext.StartBreakCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonLarge}" />
-            </StackPanel>
+                </StackPanel>
+            </Grid>
             <Grid Grid.Row="2" Margin="0,15,0,0">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="35"/>
                     <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Content="{Binding DataContext.Translations[Settings],RelativeSource={RelativeSource AncestorType=Window}}" Command="{Binding DataContext.ShowSettingsCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}"/>
-                <Button Grid.Column="2" Content="{Binding DataContext.Translations[Quit],RelativeSource={RelativeSource AncestorType=Window}}" Command="{Binding DataContext.QuitCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}"/>
+                <Button Grid.Column="4" Content="{Binding DataContext.Translations[Quit],RelativeSource={RelativeSource AncestorType=Window}}" Command="{Binding DataContext.QuitCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}"/>
             </Grid>
         </Grid>
     </Grid>

@@ -8,10 +8,14 @@
              d:DesignHeight="450" d:DesignWidth="800" >
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         <Grid Grid.Column="0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
@@ -31,9 +35,16 @@
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding DataContext.WorkPeriodInMinutes,RelativeSource={RelativeSource AncestorType=Window}}"  Style="{StaticResource TextBox1}" />
             <Label Grid.Column="0" Grid.Row="2" Content="{Binding DataContext.Translations[Break period duration (minutes)],RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}"  />
             <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding DataContext.BreakPeriodInMinutes,RelativeSource={RelativeSource AncestorType=Window}}"  Style="{StaticResource TextBox1}" />
-            <Button Grid.Column="0" Grid.Row="4" Command="{Binding DataContext.ShowClockCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonLarge}"  Content="{Binding DataContext.Translations[Back],RelativeSource={RelativeSource AncestorType=Window}}" Grid.ColumnSpan="2"/>
+            
+            
         </Grid>
-        
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1"  Command="{Binding DataContext.ShowClockCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}"  Content="{Binding DataContext.Translations[Back],RelativeSource={RelativeSource AncestorType=Window}}"/>
+        </Grid>
     </Grid>
-
 </UserControl>
