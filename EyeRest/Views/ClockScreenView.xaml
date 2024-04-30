@@ -28,16 +28,14 @@
                 <Button Content="{Binding DataContext.Translations[Start break],RelativeSource={RelativeSource AncestorType=Window}}"  Command="{Binding DataContext.StartBreakCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonLarge}" />
                 </StackPanel>
             </Grid>
-            <Grid Grid.Row="2" Margin="0,15,0,0">
+            <Grid Grid.Row="2" Margin="0,35,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Content="{Binding DataContext.Translations[Settings],RelativeSource={RelativeSource AncestorType=Window}}" Command="{Binding DataContext.ShowSettingsCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}"/>
-                <Button Grid.Column="4" Content="{Binding DataContext.Translations[Quit],RelativeSource={RelativeSource AncestorType=Window}}" Command="{Binding DataContext.AskWhethetToQuitCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}"/>
+                <Button Grid.Column="2" Content="{Binding DataContext.Translations[Quit],RelativeSource={RelativeSource AncestorType=Window}}" Command="{Binding DataContext.AskWhethetToQuitCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}"/>
             </Grid>
         </Grid>
     </Grid>

@@ -45,7 +45,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="ButtonLarge" BasedOn="{StaticResource ButtonAbstract}" TargetType="Button">
-            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="MinWidth" Value="130"/>
             <Setter Property="MinHeight" Value="40"/>
             <Setter Property="Margin" Value="0,0,0,10"/>
         </Style>
@@ -57,8 +57,8 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="ButtonSmall" BasedOn="{StaticResource ButtonAbstract}" TargetType="Button">
-            <Setter Property="MinWidth" Value="60"/>
-            <Setter Property="MinHeight" Value="35"/>
+            <Setter Property="MinWidth" Value="65"/>
+            <Setter Property="MinHeight" Value="40"/>
             <Setter Property="Margin" Value="5" />
         </Style>
         <!--#endregion-->
