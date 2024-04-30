@@ -1,6 +1,7 @@
 ﻿using EyeRest.Helpers;
 using EyeRest.Models;
 using EyeRest.Models.Languages;
+using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -312,9 +313,7 @@ namespace EyeRest.ViewModels
             AppStatus = AppStatus.Work;
             LabelInFirstButton = Translations["Pause"]; ;
 
-            Console.Beep(500, 200);
-            Console.Beep(1000, 200);
-            MessageBox.Show(Translations["It's time to work."]);            
+            showToastNotification(Translations["It's time to work."]);           
         }
         private void startBreak()
         {
@@ -330,9 +329,7 @@ namespace EyeRest.ViewModels
             AppStatus = AppStatus.Break;
             LabelInFirstButton = Translations["Pause"];
 
-            Console.Beep(1000, 200);
-            Console.Beep(500, 200);
-            MessageBox.Show(Translations["It's time to have a break."]);
+            showToastNotification(Translations["It's time to have a break."]);
         }
         private void startPauseOrResume()
         {
@@ -412,6 +409,18 @@ namespace EyeRest.ViewModels
             {
                 throw new Exception("Language can't be null!");
             }
+        }
+        private void showToastNotification(string message)
+        {
+            new ToastContentBuilder()
+                .AddText(message)
+                .SetToastScenario(ToastScenario.Reminder)
+                .AddButton(new ToastButton()
+                .SetContent("OK"))
+                .Show(toast =>
+                {
+                    toast.ExpirationTime = DateTime.Now.AddMinutes(5);
+                });
         }
         #endregion       
         #region Commands
