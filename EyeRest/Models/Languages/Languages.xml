@@ -138,4 +138,16 @@
 		<pl>Niemiecki</pl>
 		<ger>Deutsch</ger>
 	</text>
+	<text>
+		<name>Yes</name>
+		<en>Yes</en>
+		<pl>Tak</pl>
+		<ger>Ja</ger>
+	</text>
+	<text>
+		<name>No</name>
+		<en>No</en>
+		<pl>Nie</pl>
+		<ger>Nein</ger>
+	</text>
 </languages>

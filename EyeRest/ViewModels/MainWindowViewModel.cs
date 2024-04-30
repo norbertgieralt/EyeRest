@@ -245,6 +245,7 @@ namespace EyeRest.ViewModels
             ViewModels = new ObservableCollection<BaseViewModel>();
             ViewModels.Add(new ClockScreenViewModel());
             ViewModels.Add(new SettingsViewModel());
+            ViewModels.Add(new QuitViewModel());
 
             AppStatus = AppStatus.Initial;
             readSettings();
@@ -365,9 +366,12 @@ namespace EyeRest.ViewModels
             }
         }
         private void quit()
+        {      
+            App.Current.Shutdown();
+        }
+        private void askWhetherToQuit()
         {
-            if (MessageBox.Show(Translations["Are you sure to quit?"], Translations["Quit"], MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                App.Current.Shutdown();
+            ActiveViewModel = ViewModels[2];
         }
         private void showSettings()
         {
@@ -464,6 +468,13 @@ namespace EyeRest.ViewModels
             get
             {
                 return new BaseCommand(ShowClock);
+            }
+        }
+        public ICommand AskWhethetToQuitCommand
+        {
+            get
+            {
+                return new BaseCommand(askWhetherToQuit);
             }
         }
         #endregion

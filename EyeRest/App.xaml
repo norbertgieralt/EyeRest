@@ -16,6 +16,7 @@
             <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
             <Setter Property="SizeToContent" Value="WidthAndHeight"/>
             <Setter Property="ResizeMode" Value="CanMinimize"/>
+            <Setter Property="MinWidth" Value="200"/>
         </Style>
         <!--#endregion-->
         <!--#region  Grids-->

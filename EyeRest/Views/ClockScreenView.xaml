@@ -37,7 +37,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Content="{Binding DataContext.Translations[Settings],RelativeSource={RelativeSource AncestorType=Window}}" Command="{Binding DataContext.ShowSettingsCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}"/>
-                <Button Grid.Column="4" Content="{Binding DataContext.Translations[Quit],RelativeSource={RelativeSource AncestorType=Window}}" Command="{Binding DataContext.QuitCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}"/>
+                <Button Grid.Column="4" Content="{Binding DataContext.Translations[Quit],RelativeSource={RelativeSource AncestorType=Window}}" Command="{Binding DataContext.AskWhethetToQuitCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}"/>
             </Grid>
         </Grid>
     </Grid>
