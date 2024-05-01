@@ -7,7 +7,9 @@
         xmlns:vm="clr-namespace:EyeRest.ViewModels"
         mc:Ignorable="d"
         Title="{Binding TimeStringToDisplay2}"
-        Style="{StaticResource MainWindow}">
+        Style="{StaticResource MainWindow}"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        WindowStyle="None">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
