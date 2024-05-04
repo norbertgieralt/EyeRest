@@ -1,4 +1,5 @@
 ﻿using EyeRest.ViewModels;
+using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,6 +14,6 @@ namespace EyeRest
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
-    {
+    {        
     }
 }

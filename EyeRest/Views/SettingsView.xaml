@@ -35,7 +35,8 @@
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding DataContext.WorkPeriodInMinutes,RelativeSource={RelativeSource AncestorType=Window}}"  Style="{StaticResource TextBox1}" />
             <Label Grid.Column="0" Grid.Row="2" Content="{Binding DataContext.Translations[Break period duration (minutes)],RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}"  />
             <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding DataContext.BreakPeriodInMinutes,RelativeSource={RelativeSource AncestorType=Window}}"  Style="{StaticResource TextBox1}" />
-            
+            <Label Grid.Column="0" Grid.Row="3" Content="{Binding DataContext.Translations[Notification sound],RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}" />
+            <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding DataContext.SoundsStrings,RelativeSource={RelativeSource AncestorType=Window}}" SelectedItem="{Binding DataContext.SoundString,RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}" Style="{StaticResource ComboBox1}" DisplayMemberPath="Translation"  />
             
         </Grid>
         <Grid Grid.Row="1" >

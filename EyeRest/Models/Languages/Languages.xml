@@ -150,4 +150,52 @@
 		<pl>Nie</pl>
 		<ger>Nein</ger>
 	</text>
+	<text>
+		<name>Bell 1</name>
+		<en>Bell 1</en>
+		<pl>Dzwonek 1</pl>
+		<ger>Glocke 1</ger>
+	</text>
+	<text>
+		<name>Bell 2</name>
+		<en>Bell 2</en>
+		<pl>Dzwonek 2</pl>
+		<ger>Glocke 2</ger>
+	</text>
+	<text>
+		<name>Bell 3</name>
+		<en>Bell 3</en>
+		<pl>Dzwonek 3</pl>
+		<ger>Glocke 3</ger>
+	</text>
+<text>
+		<name>Birds</name>
+		<en>Birds</en>
+		<pl>Ptaki</pl>
+		<ger>Vögel</ger>
+	</text>
+	<text>
+		<name>Notification 1</name>
+		<en>Notification 1</en>
+		<pl>Powiadomienie 1</pl>
+		<ger>Benachrichtigung 1</ger>
+	</text>
+	<text>
+		<name>Notification 2</name>
+		<en>Notification 2</en>
+		<pl>Powiadomienie 2</pl>
+		<ger>Benachrichtigung 2</ger>
+	</text>
+	<text>
+		<name>Whistling</name>
+		<en>Whistling</en>
+		<pl>Gwizdanie</pl>
+		<ger>Pleifen</ger>
+	</text>
+	<text>
+		<name>Notification sound</name>
+		<en>Notification sound</en>
+		<pl>Dźwięk powiadomienia</pl>
+		<ger>Benachrichtigungston</ger>
+	</text>
 </languages>

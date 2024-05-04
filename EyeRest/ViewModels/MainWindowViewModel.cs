@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Media;
 using System.Security.Cryptography.Xml;
 using System.Timers;
 using System.Windows;
@@ -14,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Xml.Linq;
+using Windows.UI.Notifications;
 using static EyeRest.Models.AppModel;
 using static EyeRest.Models.Languages.Languages;
 
@@ -197,6 +199,10 @@ namespace EyeRest.ViewModels
                     {
                         item.SetTranslation(Translations);                        
                     }
+                    foreach (SoundString item in SoundsStrings)
+                    {
+                        item.SetTranslation(Translations);
+                    }
                     if (AppStatus == AppStatus.Initial)
                     {
                         TitleStringToDisplay = Translations["Hello!"];
@@ -237,6 +243,28 @@ namespace EyeRest.ViewModels
                 OnPropertyChanged("PossibleLanguages");
             }
         }
+        private List<SoundString> soundsStrings;
+
+        public List<SoundString> SoundsStrings
+        {
+            get { return soundsStrings; }
+            set
+            {
+                soundsStrings = value;
+                OnPropertyChanged("SoundsStrings");
+            }
+        }
+        private SoundString soundString;
+
+        public SoundString SoundString
+        {
+            get { return soundString; }
+            set
+            {
+                soundString = value;
+                OnPropertyChanged("SoundString");
+            }
+        }
         #endregion
         #region Constructor
         public MainWindowViewModel()
@@ -250,6 +278,8 @@ namespace EyeRest.ViewModels
             AppStatus = AppStatus.Initial;
             readSettings();
             loadLanguage();
+            loadSoundsStrings();
+            SoundString = soundsStrings[0];
             
             
 
@@ -414,19 +444,47 @@ namespace EyeRest.ViewModels
                 throw new Exception("Language can't be null!");
             }
         }
+        private void loadSoundsStrings()
+        {
+            SoundsStrings = new List<SoundString>();
+            SoundsStrings.Add(new SoundString ("Sounds/Bell 1.wav","Bell 1"));
+            SoundsStrings.Add(new SoundString("Sounds/Bell 2.wav", "Bell 2"));
+            SoundsStrings.Add(new SoundString("Sounds/Bell 3.wav", "Bell 3"));
+            SoundsStrings.Add(new SoundString("Sounds/Birds.wav", "Birds"));
+            SoundsStrings.Add(new SoundString("Sounds/Notification 1.wav", "Notification 1"));
+            SoundsStrings.Add(new SoundString("Sounds/Notification 2.wav", "Notification 2"));
+            SoundsStrings.Add(new SoundString("Sounds/Whistling.wav", "Whistling"));
+
+            foreach (var item in SoundsStrings)
+            {
+                item.SetTranslation(Translations);
+            }
+
+        }
         private void showToastNotification(string message)
         {
+            SoundPlayer soundPlayer = new SoundPlayer(SoundString.Path);
+            soundPlayer.Load();
+            soundPlayer.Play();   
+
             new ToastContentBuilder()
                 .AddText(message)
                 .SetToastScenario(ToastScenario.Reminder)
+                .AddAudio(new Uri("ms-winsoundevent:Notification.Default"),false,true)
                 .AddButton(new ToastButton()
                 .SetContent("OK"))
                 .Show(toast =>
                 {
                     toast.ExpirationTime = DateTime.Now.AddMinutes(5);
+                    toast.Activated += toast_Activated;
+                    
                 });
+            void toast_Activated(Windows.UI.Notifications.ToastNotification sender, object args)
+            {
+                soundPlayer.Stop();                
+            }
         }
-        #endregion       
+        #endregion
         #region Commands
         public ICommand StartWorkCommand
         {
