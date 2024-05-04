@@ -61,6 +61,15 @@
             <Setter Property="MinHeight" Value="40"/>
             <Setter Property="Margin" Value="5" />
         </Style>
+        <Style x:Key="ButtonPlay"  TargetType="Button">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=DataContext.SoundNotificationEnabled,RelativeSource={RelativeSource AncestorType=Window}}" Value="false" >
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <!--#endregion-->
         <!--#region Borders -->
         <Style x:Key="Border1" TargetType="Border">
@@ -95,6 +104,15 @@
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="FontSize" Value="12" />
         </Style>
+        <Style x:Key="LabelSound" BasedOn="{StaticResource LabelSettings}" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="12" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=DataContext.SoundNotificationEnabled,RelativeSource={RelativeSource AncestorType=Window}}" Value="false" >
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <!--#endregion-->
         <!--#region  TextBoxes-->
         <Style x:Key="TextBoxAbstract"  TargetType="TextBox">
@@ -118,6 +136,22 @@
         <Style x:Key="ComboBox1" BasedOn="{StaticResource ComboBoxAbstract}" TargetType="ComboBox">
             <Setter Property="Width" Value="150" />
             <Setter Property="Height" Value="25" />
+        </Style>
+        <Style x:Key="ComboBoxSound" BasedOn="{StaticResource ComboBox1}" TargetType="ComboBox">
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Height" Value="25" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=DataContext.SoundNotificationEnabled,RelativeSource={RelativeSource AncestorType=Window}}" Value="false" >
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!--#endregion-->
+        <!--#region  CheckBoxes-->
+        <Style x:Key="ChceckBox"  TargetType="CheckBox">
+            <Setter Property="FontWeight" Value="Bold"/>            
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
         <!--#endregion-->
     </Application.Resources>

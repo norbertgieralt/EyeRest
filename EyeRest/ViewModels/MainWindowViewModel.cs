@@ -266,6 +266,19 @@ namespace EyeRest.ViewModels
                 saveSettings("notificationSound", soundString.Name);
             }
         }
+        private bool soundNotificationEnabled;
+
+        public bool SoundNotificationEnabled
+        {
+            get { return soundNotificationEnabled; }
+            set
+            {
+                soundNotificationEnabled = value;
+                OnPropertyChanged("SoundNotificationEnabled");
+                saveSettings("soundNotificationEnabled", SoundNotificationEnabled.ToString());
+            }
+        }
+
         #endregion
         #region Constructor
         public MainWindowViewModel()
@@ -410,7 +423,7 @@ namespace EyeRest.ViewModels
             XDocument settings = XDocument.Load("Models/Settings.xml");
             WorkPeriodInMinutes = int.Parse((settings.Root.Element("workPeriodInMinutes").Value));
             BreakPeriodInMinutes = int.Parse((settings.Root.Element("breakPeriodInMinutes").Value));
-            
+            SoundNotificationEnabled = bool.Parse((settings.Root.Element("soundNotificationEnabled").Value));            
         }
         private void saveSettings(string elementName, object value, string path = "Models/Settings.xml")
         {
@@ -467,8 +480,11 @@ namespace EyeRest.ViewModels
         private void showToastNotification(string message)
         {
             SoundPlayer soundPlayer = new SoundPlayer(SoundString.Path);
-            soundPlayer.Load();
-            soundPlayer.Play();   
+            if (SoundNotificationEnabled)
+            {                
+                soundPlayer.Load();
+                soundPlayer.Play();
+            }                        
 
             new ToastContentBuilder()
                 .AddText(message)
@@ -485,6 +501,15 @@ namespace EyeRest.ViewModels
             void toast_Activated(Windows.UI.Notifications.ToastNotification sender, object args)
             {
                 soundPlayer.Stop();                
+            }
+        }
+        private void playSound()
+        {
+            SoundPlayer soundPlayer = new SoundPlayer(SoundString.Path);
+            if (SoundNotificationEnabled)
+            {
+                soundPlayer.Load();
+                soundPlayer.Play();
             }
         }
         #endregion
@@ -536,6 +561,13 @@ namespace EyeRest.ViewModels
             get
             {
                 return new BaseCommand(askWhetherToQuit);
+            }
+        }
+        public ICommand PlaySoundCommand
+        {
+            get
+            {
+                return new BaseCommand(playSound);
             }
         }
         #endregion

@@ -4,4 +4,5 @@
 	<breakPeriodInMinutes>5</breakPeriodInMinutes>
 	<language>en</language>
 	<notificationSound>en</notificationSound>
+	<soundNotificationEnabled>true</soundNotificationEnabled>
 </settings>
