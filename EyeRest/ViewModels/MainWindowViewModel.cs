@@ -263,13 +263,13 @@ namespace EyeRest.ViewModels
             {
                 soundString = value;
                 OnPropertyChanged("SoundString");
+                saveSettings("notificationSound", soundString.Name);
             }
         }
         #endregion
         #region Constructor
         public MainWindowViewModel()
-        {                  
-
+        {                
             ViewModels = new ObservableCollection<BaseViewModel>();
             ViewModels.Add(new ClockScreenViewModel());
             ViewModels.Add(new SettingsViewModel());
@@ -278,19 +278,13 @@ namespace EyeRest.ViewModels
             AppStatus = AppStatus.Initial;
             readSettings();
             loadLanguage();
-            loadSoundsStrings();
-            SoundString = soundsStrings[0];
+            loadSoundsStrings();          
             
-            
-
             ShowClock();
             model = new AppModel();
             TimeStringToDisplay = "00:00";
             TitleStringToDisplay = Translations["Hello!"];
             LabelInFirstButton = "";
-
-
-
         }
         #endregion
         #region Methods
@@ -460,6 +454,15 @@ namespace EyeRest.ViewModels
                 item.SetTranslation(Translations);
             }
 
+            XDocument settings = XDocument.Load("Models/Settings.xml");
+            string s = settings.Root.Element("notificationSound").Value;
+            foreach (var item in SoundsStrings)
+            {
+                if (s==item.Name)                
+                    SoundString = item;                
+            }
+            if (SoundString==null)
+                SoundString=SoundsStrings.First();
         }
         private void showToastNotification(string message)
         {
