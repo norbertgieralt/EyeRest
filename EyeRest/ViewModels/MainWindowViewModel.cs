@@ -5,19 +5,17 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Media;
-using System.Security.Cryptography.Xml;
 using System.Timers;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Xml.Linq;
-using Windows.UI.Notifications;
 using static EyeRest.Models.AppModel;
 using static EyeRest.Models.Languages.Languages;
+using AudioSwitcher.AudioApi.CoreAudio;
+using System.Windows;
+using Windows.UI.WebUI;
+using System.Threading;
 
 namespace EyeRest.ViewModels
 {
@@ -264,6 +262,7 @@ namespace EyeRest.ViewModels
                 soundString = value;
                 OnPropertyChanged("SoundString");
                 saveSettings("notificationSound", soundString.Name);
+                soundPlayer = new SoundPlayer(SoundString.Path);
             }
         }
         private bool soundNotificationEnabled;
@@ -278,6 +277,19 @@ namespace EyeRest.ViewModels
                 saveSettings("soundNotificationEnabled", SoundNotificationEnabled.ToString());
             }
         }
+        private double volume;
+
+        public double Volume
+        {
+            get { return volume; }
+            set
+            {
+                volume = value;
+                OnPropertyChanged("Volume");
+                saveSettings("volume", Volume.ToString());
+            }
+        }
+        private SoundPlayer soundPlayer;
 
         #endregion
         #region Constructor
@@ -286,18 +298,20 @@ namespace EyeRest.ViewModels
             ViewModels = new ObservableCollection<BaseViewModel>();
             ViewModels.Add(new ClockScreenViewModel());
             ViewModels.Add(new SettingsViewModel());
-            ViewModels.Add(new QuitViewModel());
+            ViewModels.Add(new QuitViewModel());            
 
             AppStatus = AppStatus.Initial;
             readSettings();
             loadLanguage();
-            loadSoundsStrings();          
-            
+            loadSoundsStrings();
+
+            soundPlayer = new SoundPlayer(soundString.Path);
+
             ShowClock();
             model = new AppModel();
             TimeStringToDisplay = "00:00";
             TitleStringToDisplay = Translations["Hello!"];
-            LabelInFirstButton = "";
+            LabelInFirstButton = "";            
         }
         #endregion
         #region Methods
@@ -423,7 +437,8 @@ namespace EyeRest.ViewModels
             XDocument settings = XDocument.Load("Models/Settings.xml");
             WorkPeriodInMinutes = int.Parse((settings.Root.Element("workPeriodInMinutes").Value));
             BreakPeriodInMinutes = int.Parse((settings.Root.Element("breakPeriodInMinutes").Value));
-            SoundNotificationEnabled = bool.Parse((settings.Root.Element("soundNotificationEnabled").Value));            
+            SoundNotificationEnabled = bool.Parse((settings.Root.Element("soundNotificationEnabled").Value));    
+            Volume= double.Parse((settings.Root.Element("volume").Value));
         }
         private void saveSettings(string elementName, object value, string path = "Models/Settings.xml")
         {
@@ -478,13 +493,8 @@ namespace EyeRest.ViewModels
                 SoundString=SoundsStrings.First();
         }
         private void showToastNotification(string message)
-        {
-            SoundPlayer soundPlayer = new SoundPlayer(SoundString.Path);
-            if (SoundNotificationEnabled)
-            {                
-                soundPlayer.Load();
-                soundPlayer.Play();
-            }                        
+        {            
+            playSound();                      
 
             new ToastContentBuilder()
                 .AddText(message)
@@ -504,12 +514,25 @@ namespace EyeRest.ViewModels
             }
         }
         private void playSound()
-        {
-            SoundPlayer soundPlayer = new SoundPlayer(SoundString.Path);
+        {           
             if (SoundNotificationEnabled)
             {
+                CoreAudioDevice defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
+                double oldVolume = defaultPlaybackDevice.Volume;
+                defaultPlaybackDevice.Volume = Volume;
+                
                 soundPlayer.Load();
                 soundPlayer.Play();
+
+                System.Timers.Timer timer = new System.Timers.Timer(4000);
+                timer.Elapsed += OnTimedEvent;
+                timer.AutoReset = false;
+                timer.Enabled = true;
+
+                void OnTimedEvent(object? sender, ElapsedEventArgs e)
+                {
+                    defaultPlaybackDevice.Volume = oldVolume;
+                }
             }
         }
         #endregion

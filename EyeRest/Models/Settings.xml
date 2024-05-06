@@ -5,4 +5,5 @@
 	<language>en</language>
 	<notificationSound>en</notificationSound>
 	<soundNotificationEnabled>true</soundNotificationEnabled>
+	<volume>50</volume>
 </settings>

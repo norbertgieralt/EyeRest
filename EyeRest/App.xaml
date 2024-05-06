@@ -23,6 +23,14 @@
         <Style x:Key="Grid1" TargetType="{x:Type Grid}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
+        <Style x:Key="GridVolume" TargetType="{x:Type Grid}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=DataContext.SoundNotificationEnabled,RelativeSource={RelativeSource AncestorType=Window}}" Value="false" >
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <!--#endregion-->
         <!--#region  Buttons-->
         <Style x:Key="ButtonAbstract" BasedOn="{StaticResource Abstract}" TargetType="Button">
@@ -152,6 +160,24 @@
             <Setter Property="FontWeight" Value="Bold"/>            
             <Setter Property="HorizontalContentAlignment" Value="Left" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <!--#endregion-->
+        <!--#region  Sliders-->
+        <Style x:Key="SliderVolume"  TargetType="Slider">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Minimum" Value="0" />
+            <Setter Property="Maximum" Value="100" />
+            <Setter Property="SmallChange" Value="10" />
+            <Setter Property="LargeChange" Value="10" />
+            <Setter Property="TickPlacement" Value="BottomRight" />
+            <Setter Property="TickFrequency" Value="10" />
+            <Setter Property="IsSnapToTickEnabled" Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=DataContext.SoundNotificationEnabled,RelativeSource={RelativeSource AncestorType=Window}}" Value="false" >
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
         <!--#endregion-->
     </Application.Resources>

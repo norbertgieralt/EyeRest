@@ -198,4 +198,10 @@
 		<pl>Dźwięk powiadomienia</pl>
 		<ger>Benachrichtigungston</ger>
 	</text>
+	<text>
+		<name>Volume</name>
+		<en>Volume</en>
+		<pl>Głośność</pl>
+		<ger>Lautstärke</ger>
+	</text>
 </languages>
