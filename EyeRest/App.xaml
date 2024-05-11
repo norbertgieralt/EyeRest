@@ -16,7 +16,6 @@
             <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
             <Setter Property="SizeToContent" Value="WidthAndHeight"/>
             <Setter Property="ResizeMode" Value="CanMinimize"/>
-            <Setter Property="MinWidth" Value="200"/>
         </Style>
         <!--#endregion-->
         <!--#region  Grids-->
@@ -77,6 +76,12 @@
                     <Setter Property="IsEnabled" Value="False"/>
                 </DataTrigger>
             </Style.Triggers>
+        </Style>
+        <Style x:Key="ButtonMinimize" BasedOn="{StaticResource Abstract}" TargetType="Button">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
         <!--#endregion-->
         <!--#region Borders -->

@@ -13,7 +13,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="{Binding DataContext.Translations[Are you sure to quit?],RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}" />
+            <Label Grid.Row="0" Content="{Binding DataContext.Translations[Are you sure to quit?],RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}" HorizontalAlignment="Center" />
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
