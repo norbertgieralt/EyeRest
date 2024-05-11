@@ -24,14 +24,19 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <Label Content="EyeRest" Style="{StaticResource LabelSettings}" />
-                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Click="Button_Click" Style="{StaticResource ButtonMinimize}" >
-                        <Image Source="Images/minimize.png" />
-                    </Button>
-                    <Button Command="{Binding AskWhethetToQuitCommand}" Style="{StaticResource ButtonMinimize}" >
-                        <Image Source="Images/Close.png" />
-                    </Button>
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Label Content="EyeRest" Style="{StaticResource LabelSettings}" />
+                        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Click="Button_Click" Style="{StaticResource ButtonMinimize}" >
+                                <Image Source="Images/minimize.png" />
+                            </Button>
+                            <Button Command="{Binding AskWhethetToQuitCommand}" Style="{StaticResource ButtonMinimize}" >
+                                <Image Source="Images/Close.png" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    <Separator Style="{StaticResource Separator1}"/>
                 </StackPanel>
             </Grid>
             <ContentControl Grid.Row="1" Content="{Binding ActiveViewModel}" />

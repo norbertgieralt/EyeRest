@@ -185,5 +185,10 @@
             </Style.Triggers>
         </Style>
         <!--#endregion-->
+        <!--#region  Separators-->
+        <Style x:Key="Separator1" TargetType="Separator">
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+        <!--#endregion-->
     </Application.Resources>
 </Application>
