@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="EyeRest.Views.PictureView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EyeRest.Views"
+             mc:Ignorable="d"          
+             >
+    <StackPanel Orientation="Vertical">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" Content="{Binding DataContext.TitleStringToDisplay,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}" VerticalAlignment="Center" />
+            <Label Grid.Column="2" Content="{Binding DataContext.TimeStringToDisplay,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}" VerticalAlignment="Center" />
+            <Button Grid.Column="3" Command="{Binding DataContext.ShowClockCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}" Content="{Binding DataContext.Translations[Back],RelativeSource={RelativeSource AncestorType=Window}}"/>
+        </Grid>
+        <Image HorizontalAlignment="Center" Source="{Binding DataContext.SelectedPicture.Path,RelativeSource={RelativeSource AncestorType=Window}}" />        
+    </StackPanel>
+</UserControl>

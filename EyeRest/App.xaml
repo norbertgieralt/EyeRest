@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:EyeRest"
-             StartupUri="Views/MainWindow.xaml">
+             StartupUri="Views/MainWindow.xaml" >
     <Application.Resources>
         <!--#region  Abstract-->
         <Style x:Key="Abstract" TargetType="ContentControl">
@@ -14,8 +14,16 @@
         <!--#region Windows-->
         <Style x:Key="MainWindow" BasedOn="{StaticResource Abstract}" TargetType="{x:Type Window}">
             <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
+            <Setter Property="WindowState" Value="Normal"/>
             <Setter Property="SizeToContent" Value="WidthAndHeight"/>
             <Setter Property="ResizeMode" Value="CanMinimize"/>
+            <Setter Property="MaxHeight" Value="{Binding ScreenHeight}"/>
+            <Setter Property="MaxWidth" Value="{Binding ScreenWidth}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=DisplayedViewModelIndex}" Value="3" >
+                    <Setter Property="WindowState" Value="Maximized"/>                    
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
         <!--#endregion-->
         <!--#region  Grids-->
@@ -156,6 +164,16 @@
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=DataContext.SoundNotificationEnabled,RelativeSource={RelativeSource AncestorType=Window}}" Value="false" >
                     <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ComboBoxImage" BasedOn="{StaticResource ComboBox1}" TargetType="ComboBox">
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="IsEnabled" Value="False" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=DataContext.DisplayingImageEnabled,RelativeSource={RelativeSource AncestorType=Window}}" Value="true" >
+                    <Setter Property="IsEnabled" Value="True"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>

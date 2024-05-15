@@ -204,4 +204,28 @@
 		<pl>Głośność</pl>
 		<ger>Lautstärke</ger>
 	</text>
+	<text>
+		<name>Display image during break</name>
+		<en>Display image during break</en>
+		<pl>Wyświetl obrazek podczas przewry</pl>
+		<ger>Bild während der Pause anzeigen</ger>
+	</text>
+	<text>
+		<name>Example in .png</name>
+		<en>Example in .png</en>
+		<pl>Przykład w .png</pl>
+		<ger>Beispiel in .png</ger>
+	</text>
+	<text>
+		<name>Example in .jpg</name>
+		<en>Example in .jpg</en>
+		<pl>Przykład w .jpg</pl>
+		<ger>Beispiel in .jpg</ger>
+	</text>
+	<text>
+		<name>Example in .bmp</name>
+		<en>Example in .bmp</en>
+		<pl>Przykład w .bmp</pl>
+		<ger>Beispiel in .bmp</ger>
+	</text>
 </languages>

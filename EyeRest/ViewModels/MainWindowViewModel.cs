@@ -16,6 +16,8 @@ using AudioSwitcher.AudioApi.CoreAudio;
 using System.Windows;
 using Windows.UI.WebUI;
 using System.Threading;
+using System.Diagnostics;
+using EyeRest.Pictures;
 
 namespace EyeRest.ViewModels
 {
@@ -39,6 +41,13 @@ namespace EyeRest.ViewModels
             {
                 activeViewModel = value;
                 OnPropertyChanged("ActiveViewModel");
+                int index = 0;
+                foreach (var model in ViewModels)
+                {
+                    if (model == ActiveViewModel)
+                        DisplayedViewModelIndex = index;
+                    index++;
+                }
             }
         }
         private MainWindowViewModel mainWindowViewModel;
@@ -201,6 +210,10 @@ namespace EyeRest.ViewModels
                     {
                         item.SetTranslation(Translations);
                     }
+                    foreach (PictureString item in Pictures)
+                    {
+                        item.SetTranslation(Translations);
+                    }
                     if (AppStatus == AppStatus.Initial)
                     {
                         TitleStringToDisplay = Translations["Hello!"];
@@ -290,7 +303,77 @@ namespace EyeRest.ViewModels
             }
         }
         private SoundPlayer soundPlayer;
+        private int displayedViewModelIndex;
 
+        public int DisplayedViewModelIndex
+        {
+            get { return displayedViewModelIndex; }
+            set
+            {
+                displayedViewModelIndex = value;
+                OnPropertyChanged("DisplayedViewModelIndex");
+            }
+        }
+        private double screenWidth;
+
+        public double ScreenWidth
+        {
+            get { return screenWidth; }
+            set { screenWidth = value;
+                OnPropertyChanged("ScreenWidth");
+            }
+        }
+        private double screenHeight;
+
+        public double ScreenHeight
+        {
+            get { return screenHeight; }
+            set
+            {
+                screenHeight = value;
+                OnPropertyChanged("ScreenHeight");
+            }
+        }
+        private bool displayingImageEnabled;
+
+        public bool DisplayingImageEnabled
+        {
+            get { return displayingImageEnabled; }
+            set
+            {
+                displayingImageEnabled = value;
+                OnPropertyChanged("displayingImageEnabled");
+                saveSettings("displayingImageEnabled", DisplayingImageEnabled.ToString());
+            }
+        }
+        private List<PictureString> pictures;
+
+        public List<PictureString> Pictures
+        {
+            get
+            {
+                return pictures;
+            }
+            set
+            {
+                pictures = value;
+                OnPropertyChanged("Pictures");
+            }
+        }
+        private PictureString selectedPicture;
+
+        public PictureString SelectedPicture
+        {
+            get
+            {
+                return selectedPicture;
+            }
+            set
+            {
+                selectedPicture = value;
+                OnPropertyChanged("SelectedPicture");
+            }
+        }
         #endregion
         #region Constructor
         public MainWindowViewModel()
@@ -298,12 +381,14 @@ namespace EyeRest.ViewModels
             ViewModels = new ObservableCollection<BaseViewModel>();
             ViewModels.Add(new ClockScreenViewModel());
             ViewModels.Add(new SettingsViewModel());
-            ViewModels.Add(new QuitViewModel());            
+            ViewModels.Add(new QuitViewModel());
+            ViewModels.Add(new PictureViewModel());
 
             AppStatus = AppStatus.Initial;
             readSettings();
             loadLanguage();
             loadSoundsStrings();
+            loadPictures();
 
             soundPlayer = new SoundPlayer(soundString.Path);
 
@@ -311,7 +396,7 @@ namespace EyeRest.ViewModels
             model = new AppModel();
             TimeStringToDisplay = "00:00";
             TitleStringToDisplay = Translations["Hello!"];
-            LabelInFirstButton = "";            
+            LabelInFirstButton = "";           
         }
         #endregion
         #region Methods
@@ -353,6 +438,9 @@ namespace EyeRest.ViewModels
         }
         private void startWork()
         {
+            if(ActiveViewModel == ViewModels[3])
+                ActiveViewModel = ViewModels[0];
+
             if (Timer != null)
             {
                 Timer.Stop();
@@ -381,7 +469,10 @@ namespace EyeRest.ViewModels
             AppStatus = AppStatus.Break;
             LabelInFirstButton = Translations["Pause"];
 
-            showToastNotification(Translations["It's time to have a break."]);
+            if (DisplayingImageEnabled == true)
+                displayImage();
+
+            showToastNotification(Translations["It's time to have a break."]);            
         }
         private void startPauseOrResume()
         {
@@ -439,6 +530,9 @@ namespace EyeRest.ViewModels
             BreakPeriodInMinutes = int.Parse((settings.Root.Element("breakPeriodInMinutes").Value));
             SoundNotificationEnabled = bool.Parse((settings.Root.Element("soundNotificationEnabled").Value));    
             Volume= double.Parse((settings.Root.Element("volume").Value));
+            DisplayingImageEnabled= bool.Parse((settings.Root.Element("displayingImageEnabled").Value));
+            ScreenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            ScreenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
         }
         private void saveSettings(string elementName, object value, string path = "Models/Settings.xml")
         {
@@ -535,6 +629,22 @@ namespace EyeRest.ViewModels
                 }
             }
         }
+        private void loadPictures()
+        {
+            Pictures = new List<PictureString>();
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/pictureinpng.png","Example in .png"));
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/pictureinjpg.jpg", "Example in .jpg"));
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/pictureinbmp.bmp", "Example in .bmp"));
+            foreach (var item in Pictures)
+            {
+                item.SetTranslation(Translations);
+            }
+            SelectedPicture = Pictures.FirstOrDefault();
+        }
+        private void displayImage()
+        {
+            ActiveViewModel=ViewModels[3];
+        }
         #endregion
         #region Commands
         public ICommand StartWorkCommand
@@ -591,6 +701,13 @@ namespace EyeRest.ViewModels
             get
             {
                 return new BaseCommand(playSound);
+            }
+        }
+        public ICommand DisplayImageCommand
+        {
+            get
+            {
+                return new BaseCommand(displayImage);
             }
         }
         #endregion

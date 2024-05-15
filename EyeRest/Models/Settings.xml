@@ -6,4 +6,5 @@
 	<notificationSound>en</notificationSound>
 	<soundNotificationEnabled>true</soundNotificationEnabled>
 	<volume>50</volume>
+	<displayingImageEnabled>false</displayingImageEnabled>	
 </settings>

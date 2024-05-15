@@ -1,5 +1,4 @@
-﻿using EyeRest.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +16,11 @@ using System.Windows.Shapes;
 namespace EyeRest.Views
 {
     /// <summary>
-    /// Interaction logic for SettingsView.xaml
+    /// Interaction logic for PictureView.xaml
     /// </summary>
-    public partial class SettingsView : UserControl
+    public partial class PictureView : UserControl
     {
-        public SettingsView()
+        public PictureView()
         {
             InitializeComponent();
         }

@@ -9,16 +9,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pictures\PictureInBmp.bmp" />
+    <None Remove="Pictures\PictureInJPG.jpg" />
+    <None Remove="Pictures\PictureInPng.png" />
     <None Remove="Views\Images\Close.png" />
     <None Remove="Views\Images\Minimize.png" />
+    <None Remove="Views\Images\PictureInPng.png" />
     <None Remove="Views\Images\Play.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Pictures\PictureInBmp.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pictures\PictureInJPG.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pictures\PictureInPng.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\Images\Close.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Images\Minimize.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Images\PictureInPng.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Images\Play.png">
