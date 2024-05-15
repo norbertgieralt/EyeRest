@@ -47,7 +47,7 @@
                 <Button Grid.Column="2" Command="{Binding DataContext.PlaySoundCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonPlay}" >
                     <Image Source="Images/Play.png" />
                 </Button>                
-            </Grid>            
+            </Grid>
             <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding DataContext.SoundsStrings,RelativeSource={RelativeSource AncestorType=Window}}" SelectedItem="{Binding DataContext.SoundString,RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}" Style="{StaticResource ComboBoxSound}" DisplayMemberPath="Translation"/>
             <Grid Grid.Column="1" Grid.Row="4"  HorizontalAlignment="Stretch" Style="{StaticResource GridVolume}">
                 <Grid.ColumnDefinitions>
@@ -63,7 +63,16 @@
             </Grid>
             <Slider Grid.Column="1" Grid.Row="5" Value="{Binding DataContext.Volume,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Style="{StaticResource SliderVolume}" />
             <CheckBox Grid.Row="6" Grid.Column="0"  IsThreeState="False" Content="{Binding DataContext.Translations[Display image during break],RelativeSource={RelativeSource AncestorType=Window}}" IsChecked="{Binding DataContext.DisplayingImageEnabled,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}" Style="{StaticResource ChceckBox}"/>
-            <ComboBox Grid.Row="6" Grid.Column="1"  ItemsSource="{Binding DataContext.Pictures,RelativeSource={RelativeSource AncestorType=Window}}" SelectedItem="{Binding DataContext.SelectedPicture,RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}" Style="{StaticResource ComboBoxImage}" DisplayMemberPath="Translation" />
+            <ComboBox Grid.Row="6" Grid.Column="1"  ItemsSource="{Binding DataContext.Pictures,RelativeSource={RelativeSource AncestorType=Window}}" SelectedItem="{Binding DataContext.SelectedPicture,RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}" Style="{StaticResource ComboBoxImage}">
+                <ComboBox.ItemTemplate>                    
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" MaxWidth="500" MaxHeight="100">
+                            <TextBlock Text="{Binding Translation}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <Image Source="{Binding Path}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </Grid>
         <Grid Grid.Row="1" >
             <Grid.ColumnDefinitions>

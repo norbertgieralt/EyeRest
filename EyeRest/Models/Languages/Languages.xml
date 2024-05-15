@@ -228,4 +228,22 @@
 		<pl>Przykład w .bmp</pl>
 		<ger>Beispiel in .bmp</ger>
 	</text>
+	<text>
+		<name>Picture 1</name>
+		<en>Picture 1</en>
+		<pl>Obrazek 1</pl>
+		<ger>Bild 1</ger>
+	</text>
+	<text>
+		<name>Picture 2</name>
+		<en>Picture 2</en>
+		<pl>Obrazek 2</pl>
+		<ger>Bild 2</ger>
+	</text>
+<text>
+		<name>Picture 3</name>
+		<en>Picture 3</en>
+		<pl>Obrazek 3</pl>
+		<ger>Bild 3</ger>
+	</text>
 </languages>

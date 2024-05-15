@@ -635,9 +635,9 @@ namespace EyeRest.ViewModels
         private void loadPictures()
         {
             Pictures = new List<PictureString>();
-            Pictures.Add(new PictureString("pack://application:,,,/Pictures/pictureinpng.png","Example in .png"));
-            Pictures.Add(new PictureString("pack://application:,,,/Pictures/pictureinjpg.jpg", "Example in .jpg"));
-            Pictures.Add(new PictureString("pack://application:,,,/Pictures/pictureinbmp.bmp", "Example in .bmp"));
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 1.bmp","Picture 1"));
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 2.png", "Picture 2"));
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 3.jpg", "Picture 3"));
             foreach (var item in Pictures)
             {
                 item.SetTranslation(Translations);

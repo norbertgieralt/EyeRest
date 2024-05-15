@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pictures\Picture 1.bmp" />
+    <None Remove="Pictures\Picture 2.png" />
+    <None Remove="Pictures\Picture 3.jpg" />
     <None Remove="Pictures\PictureInBmp.bmp" />
     <None Remove="Pictures\PictureInJPG.jpg" />
     <None Remove="Pictures\PictureInPng.png" />
@@ -19,6 +22,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Pictures\Picture 1.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pictures\Picture 2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pictures\Picture 3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Pictures\PictureInBmp.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
