@@ -45,7 +45,10 @@ namespace EyeRest.ViewModels
                 foreach (var model in ViewModels)
                 {
                     if (model == ActiveViewModel)
+                    {
                         DisplayedViewModelIndex = index;
+                        break;
+                    }                       
                     index++;
                 }
             }

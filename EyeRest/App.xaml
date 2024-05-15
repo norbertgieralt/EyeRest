@@ -15,13 +15,15 @@
         <Style x:Key="MainWindow" BasedOn="{StaticResource Abstract}" TargetType="{x:Type Window}">
             <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
             <Setter Property="WindowState" Value="Normal"/>
+            <Setter Property="Topmost" Value="False"/>
             <Setter Property="SizeToContent" Value="WidthAndHeight"/>
             <Setter Property="ResizeMode" Value="CanMinimize"/>
             <Setter Property="MaxHeight" Value="{Binding ScreenHeight}"/>
             <Setter Property="MaxWidth" Value="{Binding ScreenWidth}"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=DisplayedViewModelIndex}" Value="3" >
-                    <Setter Property="WindowState" Value="Maximized"/>                    
+                    <Setter Property="WindowState" Value="Maximized"/>
+                    <Setter Property="Topmost" Value="True"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
