@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Column="0" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="250" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
@@ -46,7 +46,7 @@
                 <CheckBox Grid.Column="0"  IsThreeState="False" Content="{Binding DataContext.Translations[Notification sound],RelativeSource={RelativeSource AncestorType=Window}}" IsChecked="{Binding DataContext.SoundNotificationEnabled,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}" Style="{StaticResource ChceckBox}"/>
                 <Button Grid.Column="2" Command="{Binding DataContext.PlaySoundCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonPlay}" >
                     <Image Source="Images/Play.png" />
-                </Button>                
+                </Button>
             </Grid>
             <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding DataContext.SoundsStrings,RelativeSource={RelativeSource AncestorType=Window}}" SelectedItem="{Binding DataContext.SoundString,RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}" Style="{StaticResource ComboBoxSound}" DisplayMemberPath="Translation"/>
             <Grid Grid.Column="1" Grid.Row="4"  HorizontalAlignment="Stretch" Style="{StaticResource GridVolume}">
@@ -61,14 +61,24 @@
                 <Label Grid.Column="2" Content="{Binding DataContext.Translations[Volume],RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}" />
                 <Label Grid.Column="4" Content="+" Style="{StaticResource LabelSettings}"/>
             </Grid>
-            <Slider Grid.Column="1" Grid.Row="5" Value="{Binding DataContext.Volume,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Style="{StaticResource SliderVolume}" />
-            <CheckBox Grid.Row="6" Grid.Column="0"  IsThreeState="False" Content="{Binding DataContext.Translations[Display image during break],RelativeSource={RelativeSource AncestorType=Window}}" IsChecked="{Binding DataContext.DisplayingImageEnabled,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}" Style="{StaticResource ChceckBox}"/>
+            <Grid Grid.Row="6" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Grid.Row="6" Grid.Column="0"  IsThreeState="False" Content="{Binding DataContext.Translations[Display image during break],RelativeSource={RelativeSource AncestorType=Window}}" IsChecked="{Binding DataContext.DisplayingImageEnabled,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}" Style="{StaticResource ChceckBox}"/>
+                <Button Grid.Column="2" Command="{Binding DataContext.AddPictureCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonAdd}" >
+                    <Image Source="Images/Add.png" />
+                </Button>
+            </Grid>
+            <Slider Grid.Column="1" Grid.Row="5" Value="{Binding DataContext.Volume,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Style="{StaticResource SliderVolume}" />            
             <ComboBox Grid.Row="6" Grid.Column="1"  ItemsSource="{Binding DataContext.Pictures,RelativeSource={RelativeSource AncestorType=Window}}" SelectedItem="{Binding DataContext.SelectedPicture,RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}" Style="{StaticResource ComboBoxImage}">
-                <ComboBox.ItemTemplate>                    
+                <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" MaxWidth="500" MaxHeight="100">
-                            <TextBlock Text="{Binding Translation}" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <Image Source="{Binding Path}"/>
+                        <StackPanel Orientation="Horizontal" MaxWidth="300" MaxHeight="150">
+                            <!--<TextBlock Text="{Binding Translation}" VerticalAlignment="Center" Margin="0,0,10,0"/>-->
+                            <Image Source="{Binding Path}" Margin="5"/>
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>

@@ -18,6 +18,8 @@ using Windows.UI.WebUI;
 using System.Threading;
 using System.Diagnostics;
 using EyeRest.Pictures;
+using Microsoft.Win32;
+using System.IO;
 
 namespace EyeRest.ViewModels
 {
@@ -210,10 +212,6 @@ namespace EyeRest.ViewModels
                         item.SetTranslation(Translations);                        
                     }
                     foreach (SoundString item in SoundsStrings)
-                    {
-                        item.SetTranslation(Translations);
-                    }
-                    foreach (PictureString item in Pictures)
                     {
                         item.SetTranslation(Translations);
                     }
@@ -635,18 +633,29 @@ namespace EyeRest.ViewModels
         private void loadPictures()
         {
             Pictures = new List<PictureString>();
-            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 1.bmp","Picture 1"));
-            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 2.png", "Picture 2"));
-            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 3.jpg", "Picture 3"));
-            foreach (var item in Pictures)
-            {
-                item.SetTranslation(Translations);
-            }
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 1.bmp"));
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 2.png"));
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 3.jpg"));
+            
             SelectedPicture = Pictures.FirstOrDefault();
         }
         private void displayImage()
         {
             ActiveViewModel=ViewModels[3];
+        }
+        private void addPicture()
+        {          
+            OpenFileDialog openfileDialog = new OpenFileDialog();
+            openfileDialog.Multiselect = true;
+            openfileDialog.Filter = "All images (*.png, *.bmp, *.jpg)|*.png;*.bmp;*.jpg|Images (*png)|*.png|Images (*bmp)|*bmp|Images (*jpg)|*jpg";
+            if (openfileDialog.ShowDialog()==true)
+            {
+                string[] fileNames=openfileDialog.FileNames;
+                foreach (string item in fileNames)
+                {
+                    Pictures.Add(new PictureString(item));
+                }                
+            }
         }
         #endregion
         #region Commands
@@ -711,6 +720,13 @@ namespace EyeRest.ViewModels
             get
             {
                 return new BaseCommand(displayImage);
+            }
+        }
+        public ICommand AddPictureCommand
+        {
+            get
+            {
+                return new BaseCommand(addPicture);
             }
         }
         #endregion
