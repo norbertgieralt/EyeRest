@@ -72,13 +72,18 @@
                     <Image Source="Images/Add.png" />
                 </Button>
             </Grid>
-            <Slider Grid.Column="1" Grid.Row="5" Value="{Binding DataContext.Volume,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Style="{StaticResource SliderVolume}" />            
+            <Slider Grid.Column="1" Grid.Row="5" Value="{Binding DataContext.Volume,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Style="{StaticResource SliderVolume}" />
             <ComboBox Grid.Row="6" Grid.Column="1"  ItemsSource="{Binding DataContext.Pictures,RelativeSource={RelativeSource AncestorType=Window}}" SelectedItem="{Binding DataContext.SelectedPicture,RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}" Style="{StaticResource ComboBoxImage}">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Margin" Value="10"/>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" MaxWidth="300" MaxHeight="150">
-                            <!--<TextBlock Text="{Binding Translation}" VerticalAlignment="Center" Margin="0,0,10,0"/>-->
-                            <Image Source="{Binding Path}" Margin="5"/>
+                        <StackPanel Orientation="Vertical" MaxWidth="250" MaxHeight="150" Margin="0,0,0,5">
+                            <TextBlock Text="{Binding Translation}" HorizontalAlignment="Center" Margin="0,0,10,0" TextWrapping="Wrap"/>
+                            <Image Source="{Binding Path}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>

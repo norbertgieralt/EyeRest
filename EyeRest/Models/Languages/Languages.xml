@@ -240,10 +240,16 @@
 		<pl>Obrazek 2</pl>
 		<ger>Bild 2</ger>
 	</text>
-<text>
+	<text>
 		<name>Picture 3</name>
 		<en>Picture 3</en>
 		<pl>Obrazek 3</pl>
 		<ger>Bild 3</ger>
+	</text>
+	<text>
+		<name>Close picture</name>
+		<en>Close picture</en>
+		<pl>Zamknij obrazek</pl>
+		<ger>Bild schließen</ger>
 	</text>
 </languages>

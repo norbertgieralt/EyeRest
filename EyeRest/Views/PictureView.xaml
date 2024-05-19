@@ -6,22 +6,28 @@
              xmlns:local="clr-namespace:EyeRest.Views"
              mc:Ignorable="d"          
              >
-    <StackPanel Orientation="Vertical">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Image HorizontalAlignment="Center" Source="{Binding DataContext.SelectedPicture.Path,RelativeSource={RelativeSource AncestorType=Window}}" />
+        <Grid VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="1" Content="{Binding DataContext.TitleStringToDisplay,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}" VerticalAlignment="Center" />
-            <Label Grid.Column="2" Content="{Binding DataContext.TimeStringToDisplay,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}" VerticalAlignment="Center" />
-            <Button Grid.Column="3" Command="{Binding DataContext.ShowClockCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}" Content="{Binding DataContext.Translations[Back],RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="10" Background="MintCream">
+                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+                    <Label Content="{Binding DataContext.TitleStringToDisplay,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}" VerticalAlignment="Center" FontSize="25" Margin="10"/>
+                    <Label Content="{Binding DataContext.TimeStringToDisplay,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource LabelSettings}" VerticalAlignment="Center" FontSize="25" Margin="10"/>
+                    <Button Command="{Binding DataContext.ShowClockCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource ButtonSmall}" Content="{Binding DataContext.Translations[Close picture],RelativeSource={RelativeSource AncestorType=Window}}" Margin="10" />
+                </StackPanel>
+            </Border>
+
+            
         </Grid>
-        <Image HorizontalAlignment="Center" Source="{Binding DataContext.SelectedPicture.Path,RelativeSource={RelativeSource AncestorType=Window}}" />        
-    </StackPanel>
+    </Grid>
 </UserControl>

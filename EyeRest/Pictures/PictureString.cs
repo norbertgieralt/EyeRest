@@ -14,21 +14,76 @@ namespace EyeRest.Pictures
 
         public string Path
         {
-            get { return path; }
+            get 
+            { 
+                return path;
+            }
             set
             {
                 path = value;
                 OnPropertyChanged("Path");
             }
-        }        
+        }
+        private string name;
+
+        public string Name
+        {
+            get 
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+        private string translation;
+
+        public string Translation
+        {
+            get 
+            { 
+                return translation; 
+            }
+            set
+            {
+                translation = value;
+                OnPropertyChanged("Translation");
+            }
+        }
+        private bool isDefault;
+
+        public bool IsDefault
+        {
+            get 
+            { 
+                return isDefault; 
+            }
+            set 
+            { 
+                isDefault = value;
+                OnPropertyChanged("IsDefault");
+            }
+        }
+
         #endregion
         #region Constructor
-        public PictureString(string path)
+        public PictureString(string path, string name, bool isDefault)
         {
             this.Path = path;
+            this.Name = name;
+            this.IsDefault = isDefault;
         }
         #endregion
         #region Methods
+        public void SetTranslation(Dictionary<string, string> translation)
+        {
+            if (IsDefault == true)
+                this.Translation = translation[Name];
+            else
+                this.Translation = Name;            
+        }
         #endregion
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;

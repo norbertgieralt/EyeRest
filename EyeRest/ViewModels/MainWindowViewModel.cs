@@ -215,6 +215,10 @@ namespace EyeRest.ViewModels
                     {
                         item.SetTranslation(Translations);
                     }
+                    foreach (PictureString item in Pictures)
+                    {
+                        item.SetTranslation(Translations);
+                    }
                     if (AppStatus == AppStatus.Initial)
                     {
                         TitleStringToDisplay = Translations["Hello!"];
@@ -633,10 +637,15 @@ namespace EyeRest.ViewModels
         private void loadPictures()
         {
             Pictures = new List<PictureString>();
-            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 1.bmp"));
-            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 2.png"));
-            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 3.jpg"));
-            
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 1.bmp", "Picture 1",true));
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 2.png", "Picture 2", true));
+            Pictures.Add(new PictureString("pack://application:,,,/Pictures/Picture 3.jpg", "Picture 3", true));
+
+            foreach (PictureString item in Pictures)
+            {
+                item.SetTranslation(Translations);
+            }
+
             SelectedPicture = Pictures.FirstOrDefault();
         }
         private void displayImage()
@@ -646,15 +655,14 @@ namespace EyeRest.ViewModels
         private void addPicture()
         {          
             OpenFileDialog openfileDialog = new OpenFileDialog();
-            openfileDialog.Multiselect = true;
+            openfileDialog.Multiselect = false;
             openfileDialog.Filter = "All images (*.png, *.bmp, *.jpg)|*.png;*.bmp;*.jpg|Images (*png)|*.png|Images (*bmp)|*bmp|Images (*jpg)|*jpg";
             if (openfileDialog.ShowDialog()==true)
             {
-                string[] fileNames=openfileDialog.FileNames;
-                foreach (string item in fileNames)
-                {
-                    Pictures.Add(new PictureString(item));
-                }                
+                string fileName = openfileDialog.FileName;
+                string safeFileName = openfileDialog.SafeFileName;
+                Pictures.Add(new PictureString(fileName, safeFileName, false));
+                Pictures.Last().SetTranslation(Translations);
             }
         }
         #endregion
